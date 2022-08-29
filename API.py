@@ -4,7 +4,7 @@ import requests
 
 def token_lufthansa():
     '''
-    Fonction permettant d'obtenir un token pour se connecter à l'API de lufthansa.
+    Fonction permettant d'obtenir un token pour s'authentifier à l'API de lufthansa.
     retourne un token en format json
     '''
     url = "https://api.lufthansa.com/v1/oauth/token"       #url pour post une demande de token
@@ -17,9 +17,8 @@ def requete_api_lufthansa(link, token):
     Fonction permettant de lancer une requete sur l'API de lufthansa.
     Paramètres : 
         -Lien décrivant la requete (par exemple : https://api.lufthansa.com/v1/offers/lounges/FRA?tierCode=SEN&lang=de pour les lounges)
-        -
+        -token permettant de s'authentifier
     '''
-    token['access_token']  #on récupère le token pour s'authentifier
     header = {'Authorization':'Bearer ' + token['access_token'], 'Accept': 'application/json'}  #header permettant de s'authentifier
     req = requests.get(link, headers=header)   #requete lancée
     print(req.json())  #on affiche le résultat
@@ -38,18 +37,25 @@ def test_requetes_lufthansa():
     #Caractéristiques des salons disponibles : /offers/lounges/{code}[?][cabinClass={cabinClassCode}|tierCode={tierCode}][&][lang={languageCode}]
     lounges = "offers/lounges/FRA?tierCode=SEN&lang=de"
     
+    #Détails d'une ville
+    cities = "mds-references/cities?limit=44&offset=123"
+    
     print("HORAIRE DE VOL : \n") 
     requete_api_lufthansa(base+flight_schedule, token)
 
-    print("\n----------------------------------------------------------------------------\n")
-
-    print("AGENCEMENT DES PLACES ASSISES : \n")
+    #print("\n----------------------------------------------------------------------------\n")
+    #print("AGENCEMENT DES PLACES ASSISES : \n")
     #requete_api_lufthansa(base+seats,token)
 
     print("\n----------------------------------------------------------------------------\n")
 
     print("CARACTERISTIQUES DES SALONS DISPONIBLES : \n")
     requete_api_lufthansa(base+lounges, token)
+    
+    print("\n----------------------------------------------------------------------------\n")
+
+    print("Villes : \n")
+    requete_api_lufthansa(base+cities, token)
 
 
 
