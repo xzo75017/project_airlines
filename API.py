@@ -1,10 +1,11 @@
 import requests
 
 
+#----------------------------API LUFTHANSA --------------------------------
 
 def token_lufthansa():
     '''
-    Fonction permettant d'obtenir un token pour se connecter à l'API de lufthansa.
+    Fonction permettant d'obtenir un token pour s'authentifier à l'API de lufthansa.
     retourne un token en format json
     '''
     url = "https://api.lufthansa.com/v1/oauth/token"       #url pour post une demande de token
@@ -17,9 +18,8 @@ def requete_api_lufthansa(link, token):
     Fonction permettant de lancer une requete sur l'API de lufthansa.
     Paramètres : 
         -Lien décrivant la requete (par exemple : https://api.lufthansa.com/v1/offers/lounges/FRA?tierCode=SEN&lang=de pour les lounges)
-        -
+        -token permettant de s'authentifier
     '''
-    token['access_token']  #on récupère le token pour s'authentifier
     header = {'Authorization':'Bearer ' + token['access_token'], 'Accept': 'application/json'}  #header permettant de s'authentifier
     req = requests.get(link, headers=header)   #requete lancée
     print(req.json())  #on affiche le résultat
@@ -38,19 +38,56 @@ def test_requetes_lufthansa():
     #Caractéristiques des salons disponibles : /offers/lounges/{code}[?][cabinClass={cabinClassCode}|tierCode={tierCode}][&][lang={languageCode}]
     lounges = "offers/lounges/FRA?tierCode=SEN&lang=de"
     
+    #Détails d'une ville
+    cities = "mds-references/cities?limit=44&offset=123"
+    
     print("HORAIRE DE VOL : \n") 
     requete_api_lufthansa(base+flight_schedule, token)
 
-    print("\n----------------------------------------------------------------------------\n")
-
-    print("AGENCEMENT DES PLACES ASSISES : \n")
+    #print("\n----------------------------------------------------------------------------\n")
+    #print("AGENCEMENT DES PLACES ASSISES : \n")
     #requete_api_lufthansa(base+seats,token)
 
     print("\n----------------------------------------------------------------------------\n")
 
     print("CARACTERISTIQUES DES SALONS DISPONIBLES : \n")
     requete_api_lufthansa(base+lounges, token)
+    
+    print("\n----------------------------------------------------------------------------\n")
+
+    print("Villes : \n")
+    requete_api_lufthansa(base+cities, token)
 
 
 
-test_requetes_lufthansa()
+#test_requetes_lufthansa()
+
+
+
+#----------------------------API BRITISH AIRWAYS --------------------------------
+
+def requete_api_BA(link, token):
+    header = {'client-key': token}  #header permettant de s'authentifier
+    req = requests.get(link, data=header)   #requete lancée
+    print(req)  #on affiche le résultat
+
+def test_requetes_BA():
+    base = "https://api.ba.com/rest-v1/"
+    token = "6qx5j784nuqwd7h2rs4t9hgg"
+    
+    #Divertissements disponibles à la date spécifiée
+    ife = "v1/ife/?pagename=xml&when=2014-02-15"
+    
+    #Renvoie le prix le plus bas sur l'itinéraire spécifié sur une période d'un mois ou de 12 mois
+    flightOfferBasic = "v1/flightOfferBasic;departureCity=LON;arrivalCity=NYC;cabin=economy;journeyType=roundTrip;range=yearLow"
+    
+    #Vols au départ de LHR entre 6h00 et 11h00 heure locale.
+    flight = "v1/flights;departureLocation=LHR;startTime=06:00;endTime=11:00"
+    
+    
+    requete_api_BA(base+flightOfferBasic, token)
+    
+    requete_api_BA(base+flight, token)
+    
+    
+#test_requetes_BA()  
