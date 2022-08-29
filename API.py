@@ -59,4 +59,31 @@ def test_requetes_lufthansa():
 
 
 
-test_requetes_lufthansa()
+#test_requetes_lufthansa()
+
+
+def requete_api_BA(link, token):
+    header = {'client-key': token}  #header permettant de s'authentifier
+    req = requests.get(link, data=header)   #requete lancée
+    print(req)  #on affiche le résultat
+
+def test_requetes_BA():
+    base = "https://api.ba.com/rest-v1/"
+    token = "6qx5j784nuqwd7h2rs4t9hgg"
+    
+    #Divertissements disponibles à la date spécifiée
+    ife = "v1/ife/?pagename=xml&when=2014-02-15"
+    
+    #Renvoie le prix le plus bas sur l'itinéraire spécifié sur une période d'un mois ou de 12 mois
+    flightOfferBasic = "v1/flightOfferBasic;departureCity=LON;arrivalCity=NYC;cabin=economy;journeyType=roundTrip;range=yearLow"
+    
+    #Vols au départ de LHR entre 6h00 et 11h00 heure locale.
+    flight = "v1/flights;departureLocation=LHR;startTime=06:00;endTime=11:00"
+    
+    
+    requete_api_BA(base+flightOfferBasic, token)
+    
+    requete_api_BA(base+flight, token)
+    
+    
+test_requetes_BA()  
