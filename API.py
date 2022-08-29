@@ -1,6 +1,7 @@
 import requests
 
 
+#----------------------------API LUFTHANSA --------------------------------
 
 def token_lufthansa():
     '''
@@ -62,6 +63,9 @@ def test_requetes_lufthansa():
 #test_requetes_lufthansa()
 
 
+
+#----------------------------API BRITISH AIRWAYS --------------------------------
+
 def requete_api_BA(link, token):
     header = {'client-key': token}  #header permettant de s'authentifier
     req = requests.get(link, data=header)   #requete lancée
@@ -86,4 +90,4 @@ def test_requetes_BA():
     requete_api_BA(base+flight, token)
     
     
-test_requetes_BA()  
+#test_requetes_BA()  
