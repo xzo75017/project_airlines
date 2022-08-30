@@ -72,11 +72,12 @@ def requete_api_BA(link, token):
     print(req)  #on affiche le résultat
 
 def test_requetes_BA():
-    base = "https://api.ba.com/rest-v1/"
-    token = "6tscdnj7qd37kdaadj3ayckm"
+    base = "https://api.ba.com/rest-v1/v1/"
+    token = "6qx5j784nuqwd7h2rs4t9hgg"
+
     
     #Divertissements disponibles à la date spécifiée
-    ife = "v1/ife/?pagename=xml&when=2014-02-15"
+    ife = "ife/?pagename=xml&when=2014-02-15"
     
     #renvoie les offres de forfaits vol + hôtel pour la date de départ souhaitée lorsque les lieux de départ et d'arrivée sont précisés
     HotelPackage = "hotelPackages;origin=LHR;destination=YYZ;departureDate=2014-03-14T12:00:00Z;"
@@ -90,4 +91,5 @@ def test_requetes_BA():
     requete_api_BA(base+cars, token)
     
     
+
 #test_requetes_BA()  
