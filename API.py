@@ -73,21 +73,21 @@ def requete_api_BA(link, token):
 
 def test_requetes_BA():
     base = "https://api.ba.com/rest-v1/"
-    token = "6qx5j784nuqwd7h2rs4t9hgg"
+    token = "6tscdnj7qd37kdaadj3ayckm"
     
     #Divertissements disponibles à la date spécifiée
     ife = "v1/ife/?pagename=xml&when=2014-02-15"
     
-    #Renvoie le prix le plus bas sur l'itinéraire spécifié sur une période d'un mois ou de 12 mois
-    flightOfferBasic = "v1/flightOfferBasic;departureCity=LON;arrivalCity=NYC;cabin=economy;journeyType=roundTrip;range=yearLow"
+    #renvoie les offres de forfaits vol + hôtel pour la date de départ souhaitée lorsque les lieux de départ et d'arrivée sont précisés
+    HotelPackage = "hotelPackages;origin=LHR;destination=YYZ;departureDate=2014-03-14T12:00:00Z;"
     
-    #Vols au départ de LHR entre 6h00 et 11h00 heure locale.
-    flight = "v1/flights;departureLocation=LHR;startTime=06:00;endTime=11:00"
+    #Renvoie les offres de voitures pour la destination souhaitée pour les dates de prise en charge et de restitution spécifiées
+    cars = "cars;destination=MIA;pickUpDate=2014-03-14T12:00:00Z;dropOffDate=2014-03-16T12:00:00Z"
     
     
-    requete_api_BA(base+flightOfferBasic, token)
+    requete_api_BA(base+HotelPackage, token)
     
-    requete_api_BA(base+flight, token)
+    requete_api_BA(base+cars, token)
     
     
 #test_requetes_BA()  
