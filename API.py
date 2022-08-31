@@ -90,12 +90,7 @@ def test_requetes_BA():
     
     requete_api_BA(base+cars, token)
     
-    
-<<<<<<< Updated upstream
-
-#test_requetes_BA()  
-=======
-#test_requetes_BA()  
+    #test_requetes_BA()  
 
 
 #----------------------------API AIRLABS --------------------------------
@@ -126,4 +121,3 @@ def test_requetes_Airlabs():
     
     
 test_requetes_Airlabs()
->>>>>>> Stashed changes
