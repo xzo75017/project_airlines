@@ -91,5 +91,39 @@ def test_requetes_BA():
     requete_api_BA(base+cars, token)
     
     
+<<<<<<< Updated upstream
 
 #test_requetes_BA()  
+=======
+#test_requetes_BA()  
+
+
+#----------------------------API AIRLABS --------------------------------
+
+def requete_api_Airlabs(link, token):
+    header = {'api_key': token}
+    req = requests.get(link, header)   #requete lancée
+    print(req.json())  #on affiche le résultat
+
+def test_requetes_Airlabs():
+    base = "https://airlabs.co/api/v9/"
+    token = "3c0915d0-bce9-446e-8fff-5bb142492594"
+    
+    #ping
+    ping = "ping"
+    
+    #Renvoie des information sur un avion qu'il soit en standby ou en vol
+    flight = "flight?flight_iata=AA6"
+    
+    print("\n----------------------------------------------------------------------------\n")
+    print("PING : \n")
+    requete_api_Airlabs(base+ping, token)
+    
+    print("\n----------------------------------------------------------------------------\n")
+    print("INFORMATION SUR UN AVION : \n")
+    requete_api_Airlabs(base+flight, token)
+    
+    
+    
+test_requetes_Airlabs()
+>>>>>>> Stashed changes
