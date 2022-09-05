@@ -1,4 +1,5 @@
 import requests
+import json
 
 
 #----------------------------API LUFTHANSA --------------------------------
@@ -22,24 +23,33 @@ def requete_api_lufthansa(link, token):
     '''
     header = {'Authorization':'Bearer ' + token['access_token'], 'Accept': 'application/json'}  #header permettant de s'authentifier
     req = requests.get(link, headers=header)   #requete lancée
-    return req  #on affiche le résultat
+    #return req.json()  #on affiche le résultat
+    print(req.json())
     
-def test_requetes_lufthansa():
+def test_requetes_lufthansa(datedepart, datearrive):
         
     token = token_lufthansa()
     base = "https://api.lufthansa.com/v1/"  #lien de base pour toutes les requetes
 
     #horaire de vol et leur caractéristiques : ici on demande des informations sur les vols des avions de LH, ayant un numéro entre 400 et 405 et entre le 5 et 10 aout , tout les jours
-    flight_schedule = "flight-schedules/flightschedules/passenger?airlines=LH&flightNumberRanges=400-405&startDate=05AUG22&endDate=10AUG22&daysOfOperation=1234567&timeMode=UTC"
+    flight_schedule = "flight-schedules/flightschedules/passenger?airlines=LH&flightNumberRanges=400-405&startDate="+datedepart+"&endDate="+datearrive+"&daysOfOperation=1234567&timeMode=UTC"
     
     print("HORAIRE DE VOL : \n") 
     reponse = requete_api_lufthansa(base+flight_schedule, token)
     
-    print(type(reponse))
+    with open('vol.json', 'w') as f:
+        json.dump(reponse, f)
 
 
 
-test_requetes_lufthansa()
+def main():
+    datedep="05AUG22"
+    datend="10AUG22"
+    test_requetes_lufthansa(datedep, datend)
+    
+    
+if __name__=="__main__":
+    main()
 
 
 
