@@ -1,5 +1,8 @@
+from platform import python_build
 import requests
 import json
+from pymongo import MongoClient
+from pprint import pprint
 
 
 #----------------------------API LUFTHANSA --------------------------------
@@ -23,8 +26,8 @@ def requete_api_lufthansa(link, token):
     '''
     header = {'Authorization':'Bearer ' + token['access_token'], 'Accept': 'application/json'}  #header permettant de s'authentifier
     req = requests.get(link, headers=header)   #requete lancée
-    #return req.json()  #on affiche le résultat
-    print(req.json())
+    return req.json()  #on affiche le résultat
+    #print(req.json())
     
 def test_requetes_lufthansa(datedepart, datearrive):
         
@@ -37,15 +40,34 @@ def test_requetes_lufthansa(datedepart, datearrive):
     print("HORAIRE DE VOL : \n") 
     reponse = requete_api_lufthansa(base+flight_schedule, token)
     
-    with open('vol.json', 'w') as f:
+    with open('requetes/vol.json', 'w') as f:
         json.dump(reponse, f)
+    
+    return reponse
 
 
+def connexion():
+    client = MongoClient("mongodb+srv://DST-PROJECT:DST@cluster0.7wo11db.mongodb.net/?retryWrites=true&w=majority")
+    return client
+    
 
 def main():
     datedep="05AUG22"
     datend="10AUG22"
     test_requetes_lufthansa(datedep, datend)
+    
+    with open('requetes/vol.json') as f:
+        data=json.load(f)
+        
+    db = connexion().test
+    
+    db.drop_collection('Vol')
+    result_vol=db.create_collection('Vol')
+    result_vol.insert_many(data)
+    
+    print(list(result_vol.find(filter={})))
+    
+    
     
     
 if __name__=="__main__":
