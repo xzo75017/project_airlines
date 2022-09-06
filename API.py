@@ -27,7 +27,15 @@ def requete_api_lufthansa(link, token):
     header = {'Authorization':'Bearer ' + token['access_token'], 'Accept': 'application/json'}  #header permettant de s'authentifier
     req = requests.get(link, headers=header)   #requete lancée
     return req.json()  #on affiche le résultat
-    #print(req.json())
+
+
+def connexion():
+    '''
+    Connexion au serveur MongoDB
+    '''
+    client = MongoClient("mongodb+srv://DST-PROJECT:DST@cluster0.7wo11db.mongodb.net/?retryWrites=true&w=majority")
+    return client
+
     
 def test_requetes_lufthansa(datedepart, datearrive):
         
@@ -45,10 +53,6 @@ def test_requetes_lufthansa(datedepart, datearrive):
     
     return reponse
 
-
-def connexion():
-    client = MongoClient("mongodb+srv://DST-PROJECT:DST@cluster0.7wo11db.mongodb.net/?retryWrites=true&w=majority")
-    return client
     
 
 def main():
@@ -65,7 +69,7 @@ def main():
     result_vol=db.create_collection('Vol')
     result_vol.insert_many(data)
     
-    print(list(result_vol.find(filter={})))
+    print(list(result_vol.find(projection={'legs.origin':1, '_id':0})))   #Exemple de récupération d'une donnée dans la db : ville d'origine du vol
     
     
     
