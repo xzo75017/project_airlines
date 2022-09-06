@@ -44,8 +44,8 @@ def test_requetes_lufthansa(datedepart, datearrive):
 
     #horaire de vol et leur caractéristiques : ici on demande des informations sur les vols des avions de LH, ayant un numéro entre 400 et 405 et entre le 5 et 10 aout , tout les jours
     flight_schedule = "flight-schedules/flightschedules/passenger?airlines=LH&flightNumberRanges=400-405&startDate="+datedepart+"&endDate="+datearrive+"&daysOfOperation=1234567&timeMode=UTC"
+    #schedule = "operations/schedules/FRA/JFK/2019-07-15T14:30"
     
-    print("HORAIRE DE VOL : \n") 
     reponse = requete_api_lufthansa(base+flight_schedule, token)
     
     with open('requetes/vol.json', 'w') as f:
@@ -69,7 +69,7 @@ def main():
     result_vol=db.create_collection('Vol')
     result_vol.insert_many(data)
     
-    print(list(result_vol.find(projection={'legs.origin':1, '_id':0})))   #Exemple de récupération d'une donnée dans la db : ville d'origine du vol
+    pprint(list(result_vol.find(projection={'legs.origin':1, '_id':0})))   #Exemple de récupération d'une donnée dans la db : ville d'origine du vol
     
     
     
