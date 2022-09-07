@@ -1,12 +1,15 @@
-# Webscraping Activité
-# Scrapping ac SelectorGadget de google chrome
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import pandas as pd
 
-while True : 
-    page_events = urlopen("https://allevents.in/paris/all")
-    soup = BeautifulSoup(page_events, 'html.parser')
+
+page_events=[]
+i=1
+
+def get_data(compteur):
+    
+    page = urlopen("https://allevents.in/paris/all?page="+str(compteur))
+    soup = BeautifulSoup(page, 'html.parser')
     ##recupere les titres de la page avec l'outil selectorGadget
     title = soup.select(".title h3")
     # Récupérer les titres des activités propres, on utilise l'attribut text et la boucle
@@ -23,28 +26,22 @@ while True :
         jour_activite = []
     for element in jour:
         jour_activite.append(element.text.strip("()")[:2])
+    
+    table_activity = pd.DataFrame(list(zip(noms_activite,moi_activite,jour_activite)), columns=["Titre","moi","jour"])
+    
+    return table_activity
+
+
+while True:
+    result = get_data(i)
+    if len(result) > 1:
+        page_events.append(result)
+        i+=1
+    else :
+        break
         
-    pages = soup.find('<a href="https://allevents.in/paris/all?page=2"', {'class' :"btn btn-success btn-round btn-large mb20"})*
-    if not pages.find('<a href="https://allevents.in/paris/all?page=2"', {'class': 'btn btn-success btn-round btn-large mb20'}):
-        
-        return url
-    else:
-        return            
-
-
-
-
-
-
-#Note_imdb = Note_imdb[4:]
     
 
-# Création de la data frame
 
-imdb = pd.DataFrame(list(zip(noms_activite,moi_activite,jour_activite)), columns=["Titre","moi","jour"])
-
-print(imdb[:50])
-
-
-for i range(1,)
+print(page_events)
 
