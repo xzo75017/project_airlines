@@ -1,23 +1,36 @@
 import API_flightapi as API
-import DB_Mongo as mongo
-import gestion_fichiers
+from DB_Mongo import DB_Mongo
+from gestion_fichiers import Fichier
+from Insertion_Mongo import insertion_mdb
 import json
-import ijson
-from pprint import pprint
 
 
 
 
 def main():           
     
-    #data = API.test_requetes_flightapi()
+    depart = input("D'ou partez-vous?")
+    arrive = input("Ou allez-vous?")
+    operation = input("1 pour un aller simple, 2 pour un aller retour : ")
+    date = input("Quand partez-vous?")
+    adulte = input("Combien d'adultes?")
+    enfant = input("Combien d'enfant?")
+    bebe = input("Combien de bebe?")
+    classe = input("En quelle classe voulez-vous être?")
+    devise = input("Avec quelle devise allez-vous payer?")
     
-    with open("requetes/onewaytrip/Requete-du-17-09-2022.json","rb") as f:
-        for element in ijson.items(f):
-            pprint(element)
+    filter = depart + '/' + arrive + '/' + date + '/' + adulte + '/' + enfant + '/' + bebe + '/' + devise
+    filter = 'LHR/LAX/2022-11-11/2/0/1/Economy/USD'
+    operation = 'onewaytrip'
+    print(filter)
     
-    #gestion_fichiers.Fichier('onewaytrip', data)
+    reponse = API.requete_api_flightapi(operation, filter)
     
+    io = open(Fichier(operation, reponse).link, "r")
+    data = json.load(io)
+    
+    db = DB_Mongo()  
+    insertion_mdb(data, db)
     
     
 if __name__=="__main__":

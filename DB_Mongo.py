@@ -1,3 +1,4 @@
+from msilib.schema import Error
 from pymongo import MongoClient
 import json
 
@@ -6,6 +7,9 @@ class DB_Mongo:
     connect = ''
     vol = ''
     event = ''
+    price = ''
+    airport = ''
+    airline = ''
     
     def connexion(self):
         '''
@@ -18,12 +22,27 @@ class DB_Mongo:
         self.connect = self.connexion().test
         self.vol = self.connect['Vol']
         self.event = self.connect['Event']
+        self.price = self.connect['Price']
+        self.airport = self.connect['Airport']
+        self.airline = self.connect['Airline']
+        
 
     
-    def insert_vol(self, fichier):
-       self.vol.insert_one(fichier) 
+    def insert(self, fichier, option):
+        match option:
+            case 'Vol':
+                self.vol.insert_one(fichier)
+            case 'Event':
+                self.event.insert_one(fichier)
+            case 'Price':
+                self.price.insert_one(fichier)
+            case 'Airport':
+                self.airport.replace_one(fichier, fichier, upsert=True)
+            case 'Airline':
+                self.airline.replace_one(fichier, fichier, upsert=True)
+            case other:
+                raise ValueError("L'option n'est pas dans la liste")
     
-    def insert_event(self, fichier):
-       self.event.insert_one(fichier) 
+     
        
        
