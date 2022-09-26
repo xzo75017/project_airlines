@@ -1,15 +1,25 @@
 from datetime import datetime
 import json
+from pathlib import Path
 
 class Fichier:
-    data = ''
     param = ''
     link = ''
-    def __init__(self, param, data):
+    def __init__(self, param, data, ville = ''):
         self.param = param
         
-        self.link = "requetes/"+ param + "/Requete-du-" + datetime.now().strftime("%d-%m-%Y") + ".json"
+        if param == 'event':
+            self.link = "evenements/"+ ville + "/Requete-du-" + datetime.now().strftime("%d-%m-%Y") + ".json"
+            Path("evenements/"+ ville).mkdir(parents=True, exist_ok=True)
+            self.json_event(data)
+        else:              
+            self.link = "requetes/"+ param + "/Requete-du-" + datetime.now().strftime("%d-%m-%Y") + ".json"
+            Path("requetes/"+ param).mkdir(parents=True, exist_ok=True)
+            self.json_vol(data)
         
+
+            
+    def json_vol(self, data):
         try:
             #Si le fichier existe, on rajoute l'objet json dans le fichier correspondant
             fp = open(self.link, 'r+')
@@ -23,7 +33,8 @@ class Fichier:
             prefix = {"requetes":[]}
             prefix["requetes"].append(data)
             json.dump(prefix, fp)
-
             
-
+    def json_event(self, data):
+        fp = open(self.link, 'w+')
+        json.dump(data, fp)
 

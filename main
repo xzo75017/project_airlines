@@ -1,7 +1,7 @@
 import API_flightapi as API
 from DB_Mongo import DB_Mongo
 from gestion_fichiers import Fichier
-from Insertion_Mongo import insertion_mdb
+from Insertion_Mongo import insertion_mdb_vol
 import json
 
 
@@ -30,7 +30,7 @@ def main():
     data = json.load(io)
     
     db = DB_Mongo()  
-    insertion_mdb(data, db)
+    insertion_mdb_vol(data, db)
     
     
 if __name__=="__main__":
