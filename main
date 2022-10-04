@@ -9,17 +9,17 @@ import json
 
 def main():           
     
-    depart = input("D'ou partez-vous?")
-    arrive = input("Ou allez-vous?")
-    operation = input("1 pour un aller simple, 2 pour un aller retour : ")
-    date = input("Quand partez-vous?")
-    adulte = input("Combien d'adultes?")
-    enfant = input("Combien d'enfant?")
-    bebe = input("Combien de bebe?")
-    classe = input("En quelle classe voulez-vous être?")
-    devise = input("Avec quelle devise allez-vous payer?")
+    #depart = input("D'ou partez-vous?")
+    #arrive = input("Ou allez-vous?")
+    #operation = input("1 pour un aller simple, 2 pour un aller retour : ")
+    #date = input("Quand partez-vous?")
+    #adulte = input("Combien d'adultes?")
+    #enfant = input("Combien d'enfant?")
+    #bebe = input("Combien de bebe?")
+    #classe = input("En quelle classe voulez-vous être?")
+    #devise = input("Avec quelle devise allez-vous payer?")
     
-    filter = depart + '/' + arrive + '/' + date + '/' + adulte + '/' + enfant + '/' + bebe + '/' + devise
+    #filter = depart + '/' + arrive + '/' + date + '/' + adulte + '/' + enfant + '/' + bebe + '/' + devise
     filter = 'LHR/LAX/2022-11-11/2/0/1/Economy/USD'
     operation = 'onewaytrip'
     print(filter)

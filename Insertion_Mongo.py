@@ -21,6 +21,8 @@ def insertion_mdb_vol(data, db):
         list_dac = []
         list_aac = []
         list_ac = []
+        list_depdate = []
+        list_arrdate = []
         
         dict_price = {}
         list_id_price = []
@@ -32,8 +34,10 @@ def insertion_mdb_vol(data, db):
             #Creation du dictionnaire Vol : 
         for element in (data["requetes"][i]["legs"]):
             list_id.append(billet_id_split(element["id"]))
-            list_dt.append(element["departureTime"])
-            list_at.append(element["arrivalTime"])
+            list_dt.append(element["departureTime"] + ':00')
+            list_at.append(element["arrivalTime"] + ':00')
+            list_depdate.append(element['departureDateTime'].split('T')[0])
+            list_arrdate.append(element['arrivalDateTime'].split('T')[0])
             list_dur.append(element["duration"])
             list_dac.append(element["departureAirportCode"])
             list_aac.append(element["arrivalAirportCode"])
@@ -46,7 +50,9 @@ def insertion_mdb_vol(data, db):
         dict_vol["duration"] = list_dur 
         dict_vol["departureAirportCode"] = list_dac 
         dict_vol["arrivalAirportCode"] = list_aac 
-        dict_vol["airlineCodes"] = list_ac   
+        dict_vol["airlineCodes"] = list_ac
+        dict_vol["departureDate"] = list_depdate
+        dict_vol["arrivalDate"] = list_arrdate   
         
         #Creation du dictionnaire Price
         
