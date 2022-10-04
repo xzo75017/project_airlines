@@ -17,7 +17,7 @@ SERVICE = 'mongoexport'
 
 class MongoExport(object):
 
-    def __init__(self, password, database ,  collection, filetype,output=None):
+    def __init__(self, password='DST', database='test' ,  collection, filetype,output=None):
         """Constructor for mongoexport job.
         :param fields:  Fields as a list which will be selected for export.
                         Each field may reference a subdocument or value using
