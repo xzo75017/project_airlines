@@ -1,10 +1,12 @@
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
-import plotly.express as px
 from dash.dependencies import Input,Output
+from Dash_Handler import dash_handler
+from dash import dash_table, dcc, html
+import pandas as pd
 
 Columns = ("Depart ", "Arrivée ", "Heure de départ ", "Heure d'arrivée ", "Durée ")
+
+df = pd.DataFrame(columns = ["id_vol","departureTime","arrivalTime","duration","departureAirportCode","arrivalAirportCode","airlineCodes","departureDate", "arrivalDate"])
 ALLOWED_TYPES = (
     "text"
 )
@@ -22,16 +24,28 @@ app.layout = html.Div([
         )
         for i in range (5)
     ]
-    + [html.Div(id="out-all-types")]
+        + [html.Div(id = "Vol")]
 
 )
 
 @app.callback(
-    Output("out-all-types", "children"),
+    Output("Vol", "children"),
     [Input("input_{}".format(i), "value") for i in range(5)],
 )
 def cb_render(*vals):
-    return " | ".join((str(val) for val in vals if val))
+    result = dash_handler(vals)
+    df1 = pd.DataFrame(result)
+    return [
+       dash_table.DataTable(
+            df1.to_dict('records'),
+            [{"name": i, "id": i} for i in df1.columns]
+            
+       ) 
+    ]
+
+        
+    #return id, HD, HA, Dur, Arp_dep, Arp_arr, Air, Dep, Arr
+        
 
 # @app.callback(Output(component_id='graph_1', component_property='figure'),
 #             [Input(component_id='Dropdown', component_property='value'),
