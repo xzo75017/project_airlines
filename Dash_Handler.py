@@ -1,7 +1,10 @@
-from sql_database import table_association
-import sqlite3
+from sqlalchemy import create_engine, MetaData
 
 def dash_handler(donnee):
-    con = sqlite3.connect("travel.db")
-    cur = con.cursor()
-    return table_association(cur)
+    engine = create_engine('sqlite:///travel.db', echo = True)
+
+    meta = MetaData()
+
+    with engine.connect() as connection:
+        results = connection.execute("SELECT * FROM vol")
+        return results.fetchall()
