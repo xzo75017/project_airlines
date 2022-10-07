@@ -3,6 +3,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
 from dash.dependencies import Input,Output
+from Dash_Handler import dash_handler
 
 Columns = ("Depart ", "Arrivée ", "Heure de départ ", "Heure d'arrivée ", "Durée ")
 ALLOWED_TYPES = (
@@ -31,7 +32,9 @@ app.layout = html.Div([
     [Input("input_{}".format(i), "value") for i in range(5)],
 )
 def cb_render(*vals):
-    return " | ".join((str(val) for val in vals if val))
+    result = dash_handler(vals)
+    print(result)
+    return result
 
 # @app.callback(Output(component_id='graph_1', component_property='figure'),
 #             [Input(component_id='Dropdown', component_property='value'),

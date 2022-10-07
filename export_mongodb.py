@@ -1,5 +1,6 @@
 from DB_Mongo import DB_Mongo
 import sqlite3
+from sql_database import table_association
 
 db = DB_Mongo()
 
@@ -97,3 +98,6 @@ for i in cursor5:
     cur.execute("insert into airline (airlineCode, airlineName) values (?, ?);" , (codeNameAirline, airlineName))
 
 cur.execute("SELECT * FROM airport LIMIT 20;")
+
+print(table_association(cur))
+

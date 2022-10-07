@@ -24,11 +24,11 @@ def creation_connection(self):
 
 
 
-print(jdata2)
+#print(jdata2)
 
 
-def table_association():
-    db_cursor.execute("""\
+def table_association(cursor):
+    cursor.execute("""\
         SELECT
         vol.id_vol,
         vol.departureDate,
@@ -49,10 +49,12 @@ def table_association():
         INNER JOIN airport air2 ON vol.departureAirportCode = air2.airportCode
         INNER JOIN price ON vol.id_vol = price.id_price
         """)
-db_cursor.fetchall()
+    
+    return cursor.fetchall()
+# db_cursor.fetchall()
 
-db_cursor.execute("SELECT airlinecodes FROM vol;")
-db_cursor.fetchall()
+# db_cursor.execute("SELECT airlinecodes FROM vol;")
+# db_cursor.fetchall()
 
 
     
