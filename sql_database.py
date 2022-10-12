@@ -146,40 +146,32 @@ def insertion():
 
 
 def table_association(cursor):
-    cursor.execute("""\
+    result = cursor.execute("""
         SELECT
-        vol.id_vol,
-        vol.departureDate,
-        vol.departureTime,
-        vol.departureAirportCode,
-        air1.airportName AS Aeroport_dep,
-        vol.arrivalDate,
-        vol.arrivalTime,
-        vol.arrivalAirportCode,
-        air2.airportName AS Aeroport_arr,
-        vol.duration,
-        price.totalAmount,
-        price.amountPerAdult,
-        price.amountPerChild,
-        price.amountPerInfant
+            vol.id_vol,
+            vol.departureDate,
+            vol.departureTime,
+            vol.departureAirportCode,
+            air1.airportName AS Aeroport_dep,
+            vol.arrivalDate,
+            vol.arrivalTime,
+            vol.arrivalAirportCode,
+            air2.airportName AS Aeroport_arr,
+            vol.duration,
+            price.totalAmount,
+            price.amountPerAdult,
+            price.amountPerChild,
+            price.amountPerInfant
         FROM
-        vol INNER JOIN airport air1 ON vol.departureAirportCode = air1.airportCode
-        INNER JOIN airport air2 ON vol.departureAirportCode = air2.airportCode
-        INNER JOIN price ON vol.id_vol = price.id_price
+            vol INNER JOIN airport air1 ON vol.departureAirportCode = air1.airportCode
+            INNER JOIN airport air2 ON vol.departureAirportCode = air2.airportCode
+            INNER JOIN price ON vol.id_vol = price.id_price
         """)
     
-    return cursor.fetchall()
-# db_cursor.fetchall()
-
-# db_cursor.execute("SELECT airlinecodes FROM vol;")
-# db_cursor.fetchall()
-
-# creation_tables()
-# insertion()
-
-# with DB_SQL_connect().connect() as connection:
-#     results = connection.execute("SELECT * FROM vol LIMIT 1")
-#     print(results.fetchall())
+    return result.fetchall()
 
 
+with DB_SQL_connect().connect() as connection:
+    meta = MetaData()
+    table_association(connection)
     
