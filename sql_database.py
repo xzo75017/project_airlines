@@ -83,14 +83,19 @@ def insertion():
         jour = i.get('Jour')
         mois = i.get('Mois')
         ville = i.get('Ville')
-        
+    
+    codeNameAirport = []
+    airportName = []    
     for i in cursor4:
-        codeNameAirport = list(i.keys())[1]
-        airportName = list(i.values())[1]
+        codeNameAirport.append(list(i.keys())[1])
+        airportName.append(list(i.values())[1])
+    print(codeNameAirport)
         
+    codeNameAirline = []
+    airlineName = []    
     for i in cursor5:
-        codeNameAirline = list(i.keys())[1]
-        airlineName = list(i.values())[1]    
+        codeNameAirline.append(list(i.keys())[1])
+        airlineName.append(list(i.values())[1])    
         
     with DB_SQL_connect().connect() as connection:
         with connection.begin() as transaction:
@@ -127,7 +132,8 @@ def insertion():
                 
                 ins = ins.format(markers = markers)
                 
-                connection.execute(ins, (codeNameAirport,airportName))
+                for code,name in zip(codeNameAirport,airportName):
+                    connection.execute(ins, (code, name))
                 
                 ##### TABLE AIRLINE #####
                 markers = ','.join('?' * 2)
@@ -135,7 +141,8 @@ def insertion():
                 
                 ins = ins.format(markers = markers)
                 
-                connection.execute(ins, (codeNameAirline,airlineName))
+                for code,name in zip(codeNameAirline,airlineName):
+                    connection.execute(ins, (code,name))
             except:
                 transaction.rollback()
                 raise
@@ -146,32 +153,31 @@ def insertion():
 
 
 def table_association(cursor):
-    result = cursor.execute("""
-        SELECT
-            vol.id_vol,
-            vol.departureDate,
-            vol.departureTime,
-            vol.departureAirportCode,
-            air1.airportName AS Aeroport_dep,
-            vol.arrivalDate,
-            vol.arrivalTime,
-            vol.arrivalAirportCode,
-            air2.airportName AS Aeroport_arr,
-            vol.duration,
-            price.totalAmount,
-            price.amountPerAdult,
-            price.amountPerChild,
-            price.amountPerInfant
-        FROM
-            vol INNER JOIN airport air1 ON vol.departureAirportCode = air1.airportCode
-            INNER JOIN airport air2 ON vol.departureAirportCode = air2.airportCode
-            INNER JOIN price ON vol.id_vol = price.id_price
-        """)
+    result = cursor.execute("\
+        SELECT\
+            vol.id_vol,\
+            vol.departureDate,\
+            vol.departureTime,\
+            vol.departureAirportCode,\
+            air1.airportName AS Aeroport_dep,\
+            vol.arrivalDate,\
+            vol.arrivalTime,\
+            vol.arrivalAirportCode,\
+            air2.airportName AS Aeroport_arr,\
+            vol.duration,\
+            price.totalAmount,\
+            price.amountPerAdult,\
+            price.amountPerChild,\
+            price.amountPerInfant\
+        FROM\
+            vol INNER JOIN airport air1 ON vol.departureAirportCode = air1.airportCode\
+            INNER JOIN airport air2 ON vol.departureAirportCode = air2.airportCode\
+            INNER JOIN price ON vol.id_vol = price.id_price\
+        ")
     
     return result.fetchall()
 
 
-with DB_SQL_connect().connect() as connection:
-    meta = MetaData()
-    table_association(connection)
+
+
     

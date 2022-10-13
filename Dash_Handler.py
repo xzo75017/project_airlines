@@ -7,5 +7,4 @@ def dash_handler(donnee):
     meta = MetaData()
 
     with engine.connect() as connection:
-        results = connection.execute("SELECT * FROM vol")
-        return results.fetchall()
+        return table_association(connection)
