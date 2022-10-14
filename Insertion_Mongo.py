@@ -2,13 +2,23 @@
 
 
 def billet_id_split(code):
-        temp = code.split(':')
-        result = temp[1] + '-' + temp[2]
-        result = result.split('-0')[0]
-        
-        return result
+    '''
+    Fonction premettant de formatter l'id de "legs"
+    '''
+    temp = code.split(':')
+    result = temp[1] + '-' + temp[2]
+    result = result.split('-0')[0]
+    
+    return result
 
 def insertion_mdb_vol(data, db):
+    
+    '''
+    Fonction permettant de récupérer les données d'un json et insérer dans les bonnes collections dans MongoDB
+    Paramètre:
+    -data : fichier contenant les informations de vols
+    -db : connexion au MongoDB
+    '''
         
     nbRequetes = len(data["requetes"])
 
@@ -86,8 +96,12 @@ def insertion_mdb_vol(data, db):
         
         
 def insertion_mdb_event(data, db):
-    nb_event = len(data['Titre'])
-    
+    '''
+    Fonction permettant de récupérer les données d'un json et insérer dans la collection event dans MongoDB
+    Paramètre:
+    -data : fichier contenant les informations des evenements
+    -db : connexion au MongoDB
+    '''
     for nom_it, jour_it, mois_it in zip(data['Titre'], data['Jour'], data['Mois']):
         dict = {'Titre':nom_it, 'Jour':jour_it, 'Mois':mois_it, 'Ville':data['Ville'][0]}
         db.insert(dict, 'Event')

@@ -7,6 +7,9 @@ def DB_SQL_connect():
      
 
 def creation_tables():
+    '''
+    Fonction permettant la création des tables dans le SQL
+    '''
     
     meta = MetaData()
     vol = Table("Vol", meta, 
@@ -49,6 +52,9 @@ def creation_tables():
     meta.create_all(DB_SQL_connect())
 
 def insertion():
+    '''
+    Fonction permettant d'insérer les valeurs de la DB_Mongo dans le SQL.
+    '''
     db = DB_Mongo()
 
     cursor = db.vol.find()
@@ -78,11 +84,17 @@ def insertion():
         amountPerChild = i.get('amountPerChild')
         amountPerInfant = i.get('amountPerInfant')
         
+    titre = []
+    jour = []
+    mois = []
+    ville = []
     for i in cursor3:
-        titre = i.get('Titre')
-        jour = i.get('Jour')
-        mois = i.get('Mois')
-        ville = i.get('Ville')
+        print(i)
+        titre.append(i.get('Titre'))
+        jour.append(i.get('Jour'))
+        mois.append(i.get('Mois'))
+        ville.append(i.get('Ville'))
+    #print(titre)
     
     codeNameAirport = []
     airportName = []    
@@ -124,7 +136,8 @@ def insertion():
                 ins = 'INSERT OR REPLACE INTO Events VALUES ({markers})'
                 
                 ins = ins.format(markers = markers)
-                connection.execute(ins, (titre, jour, mois, ville))
+                for t, j, m, v in zip(titre, jour, mois, ville):
+                    connection.execute(ins, (t, j, m, v))
                 
                 ##### TABLE AIRPORT #####
                 markers = ','.join('?' * 2)
@@ -151,8 +164,10 @@ def insertion():
                 
                 
 
-
 def table_association(cursor):
+    '''
+    Fonction renvoyant la table d'association des différents tableaux du SQL
+    '''
     result = cursor.execute("\
         SELECT\
             vol.id_vol,\
@@ -178,6 +193,3 @@ def table_association(cursor):
     return result.fetchall()
 
 
-
-
-    

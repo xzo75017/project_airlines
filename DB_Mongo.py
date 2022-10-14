@@ -28,18 +28,24 @@ class DB_Mongo:
         
 
     
-    def insert(self, fichier, option):
+    def insert(self, data, option):
+        '''
+        Fonction permettant d'insérer des données dans le MongoDB
+        Paramètres :
+        -data : données à insérer
+        -option : dans quelle collection on les insère
+        '''
         match option:
             case 'Vol':
-                self.vol.insert_one(fichier)
+                self.vol.insert_one(data)
             case 'Event':
-                self.event.insert_one(fichier)
+                self.event.insert_one(data)
             case 'Price':
-                self.price.insert_one(fichier)
+                self.price.insert_one(data)
             case 'Airport':
-                self.airport.replace_one(fichier, fichier, upsert=True)
+                self.airport.replace_one(data, data, upsert=True)
             case 'Airline':
-                self.airline.replace_one(fichier, fichier, upsert=True)
+                self.airline.replace_one(data, data, upsert=True)
             case other:
                 raise ValueError("L'option n'est pas dans la liste")
     
