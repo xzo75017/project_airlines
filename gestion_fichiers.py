@@ -8,11 +8,11 @@ class Fichier:
     def __init__(self, param, data, ville = ''):
         self.param = param
         
-        if param == 'event':
+        if param == 'event':   #Si les données contiennent des evenements, on va les stocker dans le dossier evenement
             self.link = "evenements/"+ ville + "/Requete-du-" + datetime.now().strftime("%d-%m-%Y") + ".json"
             Path("evenements/"+ ville).mkdir(parents=True, exist_ok=True)
             self.json_event(data)
-        else:              
+        else:              #sinon ce sont des requetes, dans le dossier requetes
             self.link = "requetes/"+ param + "/Requete-du-" + datetime.now().strftime("%d-%m-%Y") + ".json"
             Path("requetes/"+ param).mkdir(parents=True, exist_ok=True)
             self.json_vol(data)
@@ -35,6 +35,7 @@ class Fichier:
             json.dump(prefix, fp)
             
     def json_event(self, data):
+        #créer le fichier dans evenement pour une ville
         fp = open(self.link, 'w+')
         json.dump(data, fp)
 

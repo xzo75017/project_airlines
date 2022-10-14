@@ -8,13 +8,18 @@ from Insertion_Mongo import insertion_mdb_event
 import json
 
 
-#page_events=[]
-i=1
-table_activity = pd.DataFrame(columns=["Titre","Mois","Jour", "Ville"])
-ville = "Paris"
     
 
-def get_data(compteur):
+def get_data(compteur, ville):
+    
+    '''
+    Fonction permettant de webscrapper les evenements d'une ville sur le site allevents.in
+    Paramètre :
+    -compteur : compteur permettant de parcourir les pages jusqu'à scrapper le dernier évenement disponible
+    
+    Sortie :
+    dataFrame contenant les informations pour la page parcourue
+    '''
     
     page = urlopen("https://allevents.in/" + ville + "/all?page="+str(compteur))
     soup = BeautifulSoup(page, 'html.parser')
@@ -38,19 +43,32 @@ def get_data(compteur):
     return result
 
 
-while True:
-    result = get_data(i)
-    if len(result) > 1:
-        table_activity = pd.concat([table_activity, result])
-        i+=1
-    else :
-        break
+
+def scrap(ville):
+    '''
+    Recupère le webscrapping et le renvoie sous forme de dictionnaire
+    '''
+    i=1
+    table_activity = pd.DataFrame(columns=["Titre","Mois","Jour", "Ville"])
+    while True:
+        result = get_data(i, ville)
+        if len(result) > 1:
+            table_activity = pd.concat([table_activity, result])
+            i+=1
+        else :
+            break
+    table_activity['Ville'] = ville    
+    dict = table_activity.to_dict(orient='list')
+    return dict
         
-table_activity['Ville'] = ville    
-
-dict = table_activity.to_dict(orient='list')
-
-io = open(Fichier('event', dict, ville).link, "r")
-data = json.load(io)
-db = DB_Mongo()  
-insertion_mdb_event(data, db)
+def insertion_event(data):
+    '''
+    Permet d'insérer les evenements dans le mongoDB
+    '''
+    io = open(Fichier('event', data, data['Ville'][0]).link, "r")
+    data = json.load(io)
+    db = DB_Mongo()  
+    insertion_mdb_event(data, db)
+    
+    
+    
