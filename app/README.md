@@ -12,8 +12,6 @@ Le projet va s'articuler de la manière suivante comme l'indique le diagramme ci
 ![Image text](file:///C:/Users/User/Downloads/Diagram_DST.drawio%20(1).png)
 
 
-b
-
 
 # III Etapes du projet 
 
@@ -44,10 +42,10 @@ airport.json
 
 ## 2. Organisation de la base de donnée 
 
- - Création d'un cluster MongoDB pour traiter les fichiers JSON en effectuant un pré-traitement des données
-   - changement id de legs ex :```   LHR-LAX:BA5951~11:BA6123~11:0" ``` et de price ex : ```a6fca0f2a8a3e4f3msr:BA5951~11-BA6123~11``` (non nécessité de définir soigneusement leur structure à l'avance d'où l'utilisation de MongoDB
-   - clarté du code  
-   - allegement du calcul
+ - Création d'un cluster MongoDB en effectuant un pré-traitement des données dans les fichiers JSON (non nécessité de définir soigneusement leur structure à l'avance d'où l'utilisation de MongoDB)
+   - changement id de legs ex :```   LHR-LAX:BA5951~11:BA6123~11:0" ``` et de price ex : ```a6fca0f2a8a3e4f3msr:BA5951~11-BA6123~11``` en ```BA5951~11-BA6123~11 ```
+ - Utilisation de MongoDB pour avoir une clarté dans le code + allégement des temps de calcul comparé à SQL 
+
 
 - Connexion au MongoDB :  ```client = MongoClient("mongodb+srv://DST-PROJECT:DST@cluster0.7wo11db.mongodb.net/?retryWrites=true&w=majority```
 
