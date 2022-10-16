@@ -9,7 +9,8 @@ Permettre à un utilisateur souhaitant partir en voyage d'avoir accès aux évé
 
 Le projet va s'articuler de la manière suivante comme l'indique le diagramme ci-dessous : 
 
-![Image text](file:///C:/Users/User/Downloads/Diagram_DST.drawio%20(1).png)
+
+![Diagram_DST drawio (1)](https://user-images.githubusercontent.com/63191063/196041099-d75d486c-932e-4600-838e-e5af91849923.png)
 
 
 
