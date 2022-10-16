@@ -28,18 +28,20 @@ Le projet va s'articuler de la manière suivante comme l'indique le diagramme ci
 ```
 - Résultats des requêtes 
 Allevents : 
-Requete-du-26-09-2022.json
-Requete-du-30-09-2022.json
+![Capture3](https://user-images.githubusercontent.com/63191063/196041997-568bb682-018a-4970-8ff8-5dd928043565.PNG)
 
 FlightAPI : 
+![Capture4](https://user-images.githubusercontent.com/63191063/196042082-59bfee7d-2001-4adf-a541-c3ec6fa744b2.PNG)
 
-flightapi_schedule_2.json
+
 
 PriceFlightAPI :
-price.json
+![Capture2](https://user-images.githubusercontent.com/63191063/196041576-29086a1a-6937-4de8-b870-54e367c3b532.PNG)
+
 
 AirportCodeAPI : 
-airport.json 
+![Capture](https://user-images.githubusercontent.com/63191063/196041376-0aeb8bdb-41f5-473c-82c2-941cbb834412.PNG)
+
 
 ## 2. Organisation de la base de donnée 
 
