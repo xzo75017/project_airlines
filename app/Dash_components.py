@@ -1,4 +1,4 @@
-from dash import dcc, html
+from dash import dcc, html, callback_context
 import dash_bootstrap_components as dbc 
 import pandas as pd
 import Dash_css as css
@@ -8,9 +8,7 @@ Columns = ("Départ",        #Champs de textes de la sidebar
         "Arrivée")
 
 
-Vol = html.Div([html.Div(id = "Vol")], style =css.TABLE_STYLE)      #Tableau d'association
-
-Event = html.Div([html.Div(id = "tableau-event")], style =css.TABLE_STYLE)      #Tableau d'evenement
+Tableau = html.Div([html.Div(id = "Tableau")], style =css.TABLE_STYLE)      #Tableau d'association
 
 date = html.Div([                                         #Date de la sidebar
     dcc.DatePickerRange(
@@ -32,7 +30,11 @@ table = html.Div(                                         #Contenue de la sideba
     ]
     + [date] + 
     [html.Br(),
-     html.Button('Submit', id='submit-val', n_clicks=0)]
+     html.Button('Trouver des evenements', id='submit-val', n_clicks=0)]
+    +
+    [html.Br(),
+     html.Br(),
+     html.Button('Trouver des Vols', id='submit-val2', n_clicks=0)]
 )
 
 
