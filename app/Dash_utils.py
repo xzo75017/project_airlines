@@ -1,4 +1,4 @@
-from sql_database import table_association, DB_SQL_connect
+from sqlite.sql_database import table_association, DB_SQL_connect
 from dash import dash_table
 import pandas as pd
 from datetime import timedelta as td

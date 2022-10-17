@@ -1,9 +1,8 @@
-from sqlite3 import connect
 from sqlalchemy import Table, create_engine, MetaData, String, Column, Float
-from MongoDB import DB_Mongo
+
 
 def DB_SQL_connect():
-    return create_engine('sqlite:///travel.db', echo = True)
+    return create_engine('sqlite:///app/sqlite/database/travel.db', echo = True)
      
 
 def creation_tables():
@@ -51,11 +50,11 @@ def creation_tables():
     
     meta.create_all(DB_SQL_connect())
 
-def insertion():
+def insertion(mdb):
     '''
     Fonction permettant d'insérer les valeurs de la DB_Mongo dans le SQL.
     '''
-    db = DB_Mongo()
+    db = mdb
 
     cursor = db.vol.find()
     cursor2 = db.price.find()
@@ -89,12 +88,10 @@ def insertion():
     mois = []
     ville = []
     for i in cursor3:
-        print(i)
         titre.append(i.get('Titre'))
         jour.append(i.get('Jour'))
         mois.append(i.get('Mois'))
         ville.append(i.get('Ville'))
-    #print(titre)
     
     codeNameAirport = []
     airportName = []    
@@ -194,4 +191,6 @@ def table_association(cursor):
 
 
 
-    
+with DB_SQL_connect().connect() as connection:
+        results = connection.execute("SELECT * FROM vol")
+        print(table_association(connection))
