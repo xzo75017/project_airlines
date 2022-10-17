@@ -1,5 +1,3 @@
-
-
 # I Objectif du projet Airline
 
 Permettre à un utilisateur souhaitant partir en voyage d'avoir accès aux événements du pays en lui proposant un billet d'avion à destination de ce pays  
@@ -20,19 +18,22 @@ Le projet va s'articuler de la manière suivante comme l'indique le diagramme ci
 
 
 - Prise en main de FlightAPI et Allevents (création de compte, requêtage des différentes routes et comparaison des données retournées).
-- Requêtage des données sur 3 end points :
+- Requêtage des données sur 3 endpoints :
  ```bash
      /onewaytrip/YOURAPIKEY/LHR/LAX/2019-10-11/2/0/1/Economy/USD
      /iata/api-key?name=american&type=airline
      /roundtrip/YOURAPIKEY/LHR/LAX/2019-10-11/2019-10-15/2/0/1/Economy/USD
 ```
-- Résultats des requêtes 
+- Utilisation de la classe ```BeautifulSoup()``` pour webscraper la page Allevents
+
+- Résultats du webscraping 
 Allevents : 
 ![Capture3](https://user-images.githubusercontent.com/63191063/196041997-568bb682-018a-4970-8ff8-5dd928043565.PNG)
 
+-Résutat de la requête pour flightAPI: 
+
 FlightAPI : 
 ![Capture4](https://user-images.githubusercontent.com/63191063/196042082-59bfee7d-2001-4adf-a541-c3ec6fa744b2.PNG)
-
 
 
 PriceFlightAPI :
@@ -43,54 +44,100 @@ AirportCodeAPI :
 ![Capture](https://user-images.githubusercontent.com/63191063/196041376-0aeb8bdb-41f5-473c-82c2-941cbb834412.PNG)
 
 
-## 2. Organisation de la base de donnée 
-
- - Création d'un cluster MongoDB en effectuant un pré-traitement des données dans les fichiers JSON (non nécessité de définir soigneusement leur structure à l'avance d'où l'utilisation de MongoDB)
-   - changement id de legs ex :```   LHR-LAX:BA5951~11:BA6123~11:0" ``` et de price ex : ```a6fca0f2a8a3e4f3msr:BA5951~11-BA6123~11``` en ```BA5951~11-BA6123~11 ```
- - Utilisation de MongoDB pour avoir une clarté dans le code + allégement des temps de calcul comparé à SQL 
-
-
-- Connexion au MongoDB :  ```client = MongoClient("mongodb+srv://DST-PROJECT:DST@cluster0.7wo11db.mongodb.net/?retryWrites=true&w=majority```
-
-- Création des collections (récupération des données utilisées pour le projet).
-   -  ```Vol ```
-   -   ```Price ```
-   - ```Airline```
-   - ```Airport```
-
-Sélections de 9 variables sur les 30 présentes dans la collection ```Vol``` :
-  - ```departureTime ```
-  - ```arrivalTime```
-  - ```duration```
-  - ```departureAirportCode```
-  - ```arrivalAirportCode```
-  - ```airlineCodes```
-  - ```departureDate```
-  -  ```arrivalDate```
-
- Sélection des variables suivantes pour la collection ```Price```:
-  - ```totalAmount```
-  - ```amountPerAdult```
-  - ```amountPerChild```
-  - ```amountPerInfant``` 
-
- Sélection des variables suivantes pour la collection ```Airline```:
-  - code de la compagnie aérienne ex : ```AF```
-  - nom de la compagnie aérienne ex : ```Air France```
+## 2. Organisation de la base de donnée
+   
+ 
+ 
+  ### 2.1  Traitement des données en utilisant le NoSQL (MongoDB) : 
+    - Besoin d'information sur les vols, les prix, les aéroports, les compagnie aérienne 
+        - Stocker les informations sur MongoDB sous forme de collections
+            - Formats différents pour les données bruts dont Airport et Airline (éviter les doublons)
+            - Historiser les données dans MongoDB 
+            - Capacité de stockage importante sur MongoDB
+         - Avant cette étape :
+              
+              - Sélection des fichiers JSON représentant les futures collections (récupération des données utilisées pour le projet):
+              
+              
+                  - ```Vol ```
+                    ```Price```
+                    ```Airline```
+                    ```Airport```
+                    ```evenement```
 
 
-Sélection des variables suivantes pour la collection ```Airport```:
-  - code de la compagnie aérienne ex : ```CDG```
-  - nom de la compagnie aérienne ex : ```Charles de Gaulle```
+              - Besoin de relier les futures collections entre elles 
+                 - Uniformisation de l'ID
+                     - ex  id de legs : ```LHR-LAX:BA5951~11:BA6123~11:0" ``` et de price ex : ```a6fca0f2a8a3e4f3msr:BA5951~11-BA6123~11``` en ```BA5951~11-BA6123~11 ```
+                 
+                 - Selection des variables 
+                      Sélections de 9 variables sur les 30 présentes dans la collection ```Vol``` :
+                      
+                      
+                          -  ```departureTime```
+                          -   ```arrivalTime```
+                          -   ```duration```
+                          -   ```departureAirportCode```
+                          -   ```arrivalAirportCode```
+                          -   ```airlineCodes```
+                          -   ```departureDate```
+                          -   ```arrivalDate```
+
+                      Sélection des variables suivantes pour la collection ```Price```:
+                      
+                      
+                          - ```totalAmount```
+                          - ```amountPerAdult```
+                          - ```amountPerChild```
+                          - ```amountPerInfant``` 
+
+                      Sélection des variables suivantes pour la collection ```Airline```:
+                      
+                      
+                          - code de la compagnie aérienne ex : ```AF```
+                          - nom de la compagnie aérienne ex : ```Air France```
 
 
-- Connexion + création d'une base de données sqlite :``` create_engine('sqlite:///travel.db', echo = True)```
-  - Création d'une base de donnée SQL pour garantir un schéma fixe des données. 
-  - Insertion des données SQL dans SQLite (table laissées disjointe (avec création d'une table de jointure en plus))
-  - Jointure des données dans la base de donnée SQL obtenir une table résultante contenant les informations sur les vols, la période, la destination et les activités. 
+                      Sélection des variables suivantes pour la collection ```Airport```:
+                      
+                      
+                          - code de la compagnie aérienne ex : ```CDG```
+                          - nom de la compagnie aérienne ex : ```Charles de Gaulle```
+                          
 
+                - Stocker les informations sur MongoDB sous forme de collections
+                
+                    - Connexion au MongoDB :  ```client = MongoClient("mongodb+srv://DST-PROJECT:DST@cluster0.7wo11db.mongodb.net/?retryWrites=true&w=majority```
+                    
+                    -  Créations des collections (récupération des données utilisées pour le projet):
+                    
+                       -  ```Vol ```
+                       -  ```Price ```
+                       - ```Airline```
+                       - ```Airport```
+                       - ```evenement ```                       
+     
+ 
 
+    ### 2.2 Traitement des données en utilisant le SQL  
+      - Dans  le cas du SQL (SQLite soucis de rapidité, dans un vrai contexte un vrais SGBD MySQL) : 
+    
+          - Tableau d'information sur le vol et les évènements (schémas fixe)
+    
+          - Connexion + création d'une base de données sqlite :``` create_engine('sqlite:///travel.db', echo = True)```
+          - Créations de la table  (récupération des données utilisées pour le projet):
 
+                    
+                       - ```Vol ```
+                       - ```Price ```
+                       - ```Airline```
+                       - ```Airport```
+                       - ```evenement ```  
+                       
+                       
+           - Insertion des données SQL dans SQLite :  ``` INSERT OR REPLACE INTO Events VALUES ({markers}) ```
+           - Jointure des données dans la base de donnée SQL obtenir une table résultante contenant les informations sur les vols, la période, la destination et les activités:
+                ```  SELECT ... INNER JOIN ... ON ...  ```
     
 
 ## 3. Consommation des données 
