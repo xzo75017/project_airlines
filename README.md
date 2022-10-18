@@ -149,7 +149,7 @@ AirportCodeAPI :
 
                  ```evenement ``` 
                  
- ### 2.2 Traitement des données en utilisant le SQL 
+ ### 2.2 Traitement des données en utilisant une base de donnée SQL 
    - Dans  le cas du SQL (SQLite soucis de rapidité, dans un vrai contexte un vrais SGBD MySQL) :
       - Nécessité de laisser les tables disjoinctes car les données provenant de MongoDB ont des structures différentes :
         - Collection Vol et Prix :  1 destination  = 200 vols 
