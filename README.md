@@ -20,30 +20,42 @@ Le projet va s'articuler de la manière suivante comme l'indique le diagramme ci
 ## 1. Extraction des données 
 
 
-- Prise en main de FlightAPI et Allevents (création de compte, requêtage des différentes routes et comparaison des données retournées).
+- Prise en main de FlightAPI (```https://www.flightapi.io/```) et Allevents (```https://allevents.in```) (création de compte, requêtage des différentes routes et comparaison des données retournées).
 - Requêtage des données sur 3 endpoints :
  ```bash
      /onewaytrip/YOURAPIKEY/LHR/LAX/2019-10-11/2/0/1/Economy/USD
      /iata/api-key?name=american&type=airline
      /roundtrip/YOURAPIKEY/LHR/LAX/2019-10-11/2019-10-15/2/0/1/Economy/USD
 ```
-- Utilisation de la classe ```BeautifulSoup()``` pour webscraper la page Allevents
+- Utilisation de la classe ```BeautifulSoup()``` de la librairie ```bs4``` pour webscraper la page Allevents  en langage Python (version ```Python 3.10.7```)
+
 
 - Résultats du webscraping 
-Allevents : 
+
+Allevents :
+
+ - Dataframe  
+
+![image](https://user-images.githubusercontent.com/63191063/196368520-2d6dce0c-8195-48c5-b20b-3754d470492a.png)
+
+ - JSON : 
+
 ![Capture3](https://user-images.githubusercontent.com/63191063/196041997-568bb682-018a-4970-8ff8-5dd928043565.PNG)
 
--Résutat de la requête pour flightAPI: 
+- Résutat de la requête pour flightAPI: 
 
 FlightAPI : 
+
 ![Capture4](https://user-images.githubusercontent.com/63191063/196042082-59bfee7d-2001-4adf-a541-c3ec6fa744b2.PNG)
 
 
 PriceFlightAPI :
+
 ![Capture2](https://user-images.githubusercontent.com/63191063/196041576-29086a1a-6937-4de8-b870-54e367c3b532.PNG)
 
 
 AirportCodeAPI : 
+
 ![Capture](https://user-images.githubusercontent.com/63191063/196041376-0aeb8bdb-41f5-473c-82c2-941cbb834412.PNG)
 
 
