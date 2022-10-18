@@ -1,9 +1,14 @@
-from sqlite.sql_database import table_association, DB_SQL_connect
+from Data.SQL.sql_database import table_association, DB_SQL_connect, insertion_vol, insertion_event
 from dash import dash_table
 import pandas as pd
 from datetime import timedelta as td
+from API_flightapi.API_flightapi import requete_api_flightapi
+from Data.json.gestion_fichiers import Fichier
+from Data.MongoDB.DB_Mongo import DB_Mongo
+from Data.MongoDB.Insertion_Mongo import insertion_mdb_vol, insertion_mdb_event
+import json
 
-def dash_vol(donnee):
+def dash_vol():
     '''
     Fonction permettant au dash d'avoir accés à la table d'association vol
     '''
@@ -70,3 +75,36 @@ def table_event(cursor, date):
         result = cursor.execute(ins, date[i])
         retour.extend(result.fetchall())
     return retour
+
+
+def city_to_code(ville):
+    with DB_SQL_connect().connect() as connection:
+        ins = 'Select City.cityCode from City WHERE City.cityName = (?)'
+        result = connection.execute(ins, ville)
+        retour = result.fetchall()
+        return retour[0][0]
+
+def data_handler_vol(depart, arrivee, code_dep, code_arr, start_date, adulte, enfant, bebe):
+    print("La fonction est rentrée dans data_handler")
+    filter = code_dep + '/' + code_arr + '/' + start_date + '/' + str(adulte) + '/' + str(enfant) + '/' + str(bebe) + '/' + 'Economy' + '/' + 'EUR'
+    operation = 'onewaytrip'
+    reponse = requete_api_flightapi(operation, filter)
+    print("La requete a bien été faite")
+    io = open(Fichier(operation, reponse).link, "r")
+    data = json.load(io)
+    print("Le fichier json vient d'être créé")
+    db = DB_Mongo()  
+    count_vol, count_price = insertion_mdb_vol(data, db)
+    print("Les données sont bien insérés dans le MongoDB")
+    print("Parle-t-on toujours de la meme ville? : ", depart)
+    insertion_vol(db, count_vol, count_price)
+    print("Les données sont bien insérés dans le SQL")
+    with DB_SQL_connect().connect() as connection:
+        return table_association(connection, depart, arrivee, start_date)
+    
+    
+    
+    
+    
+    
+    

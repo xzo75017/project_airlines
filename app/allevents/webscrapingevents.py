@@ -2,9 +2,6 @@ from operator import itemgetter
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import pandas as pd
-from gestion_fichiers import Fichier
-from DB_Mongo import DB_Mongo
-from Insertion_Mongo import insertion_mdb_event
 import json
 
 
@@ -60,12 +57,3 @@ def scrap(ville):
     table_activity['Ville'] = ville    
     dict = table_activity.to_dict(orient='list')
     return dict
-        
-def insertion_event(data):
-    '''
-    Permet d'insérer les evenements dans le mongoDB
-    '''
-    io = open(Fichier('event', data, data['Ville'][0]).link, "r")
-    data = json.load(io)
-    db = DB_Mongo()  
-    insertion_mdb_event(data, db)

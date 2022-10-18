@@ -1,9 +1,5 @@
-from platform import python_build
 import requests
 import json
-from pprint import pprint
-import pandas as pd
-import gestion_fichiers
 
 
 def write_file(titre, file):
