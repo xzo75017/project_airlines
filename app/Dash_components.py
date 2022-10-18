@@ -1,14 +1,16 @@
-from dash import dcc, html, callback_context
-import dash_bootstrap_components as dbc 
-import pandas as pd
+from dash import dcc, html
 import Dash_css as css
 from datetime import datetime as dt, timedelta as td
 
 Columns = ("Départ",        #Champs de textes de la sidebar
         "Arrivée")
 
+Columns_vol = ("Nombre d'adultes", "Nombre d'enfants", "Nombre de bébés")
+
 
 Tableau = html.Div([html.Div(id = "Tableau")], style =css.TABLE_STYLE)      #Tableau d'association
+
+Vol = html.Div([html.Div(id = "Vol")], style =css.TABLE_STYLE)      #Tableau d'association
 
 date = html.Div([                                         #Date de la sidebar
     dcc.DatePickerRange(
@@ -21,21 +23,43 @@ date = html.Div([                                         #Date de la sidebar
 ])
 
 table = html.Div(                                         #Contenue de la sidebar (champs, bouton, date)
-    [dcc.Input(
-                id = "input"+str(i),
+    [html.P("Informations pour les evenements : "),
+    html.Br(),
+    dcc.Input(
+                id = "ville_event",
                 type="text",
-                placeholder=str(Columns[i])
+                placeholder="Ville"
             )
-            for i in range (len(Columns))
     ]
     + [date] + 
     [html.Br(),
      html.Button('Trouver des evenements', id='submit-val', n_clicks=0)]
     +
+    [
+    html.Br(),
+    html.P("Informations complémentaires pour les vols : "),
+    html.Br(),
+    dcc.Input(
+                id = "ville_dep",
+                type="text",
+                placeholder="Ville de départ"
+            )
+    ]
+    +
+    [
+    dcc.Input(
+                id = "passagers"+str(i),
+                type="number",
+                placeholder=Columns_vol[i]
+            )
+            for i in range (len(Columns_vol))
+    ]
+    +
     [html.Br(),
      html.Br(),
      html.Button('Trouver des Vols', id='submit-val2', n_clicks=0)]
 )
+
 
 
 sidebar = html.Div(                                         #Sidebar en elle-meme (titre, position, ce qu'elle contient)
