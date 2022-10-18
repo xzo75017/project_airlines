@@ -177,7 +177,7 @@ AirportCodeAPI :
 
              ```evenement ``` 
         - Insertion des données SQL dans SQLite :  ``` INSERT OR REPLACE INTO Events VALUES ({markers}) ```
-        - Jointure des données dans la base de donnée SQL obtenir une table résultante contenant les informations sur les vols, la période, la destination et les activités:
+        - Jointure des données dans la base de donnée SQL obtenir une table résultante contenant les informations sur les vols, les prix, la destination et les activités:
                 ```  SELECT ... INNER JOIN ... ON ...  ```
             
 ## 3. Consommation des données 
