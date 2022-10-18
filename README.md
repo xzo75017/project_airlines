@@ -29,7 +29,10 @@ Le projet va s'articuler de la manière suivante comme l'indique le diagramme ci
 ```
 - Utilisation de la classe ```BeautifulSoup()``` de la librairie ```bs4``` pour webscraper la page Allevents  en langage Python (version ```Python 3.10.7```)
 
-
+- Récupération des cityCode de chaque ville sur le site ``` https://www.nationsonline.org/oneworld/IATA_Codes/airport_code_list.htm```
+    - Technique de webscraping non réalisable car le site est protégé contre les bots
+         - Isertion des données dans un fichier txt
+         
 - Résultats du webscraping 
 
 Allevents :
@@ -145,12 +148,20 @@ AirportCodeAPI :
                  ```Airport```
 
                  ```evenement ``` 
+                 
  ### 2.2 Traitement des données en utilisant le SQL 
    - Dans  le cas du SQL (SQLite soucis de rapidité, dans un vrai contexte un vrais SGBD MySQL) :
       - Nécessité de laisser les tables disjoinctes car les données provenant de MongoDB ont des structures différentes :
         - Collection Vol et Prix :  1 destination  = 200 vols 
         - Collection évènement : 1 clé = 1 évènement
         - Collection Airlines et Airport : 1 code aéroport = 1 nom aéroport
+
+
+      - - Transformation des données sous le meme format que airline et airport
+      -  création d'une table concernant les villes et leur code IATA pour obtenir le cityCode de chaque ville
+      
+      
+      
       
       - Tableau d'information sur le vol et les évènements (schémas fixe)
           - Connexion + création d'une base de données sqlite :``` create_engine('sqlite:///travel.db', echo = True)``` 
