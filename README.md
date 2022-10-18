@@ -147,6 +147,11 @@ AirportCodeAPI :
                  ```evenement ``` 
  ### 2.2 Traitement des données en utilisant le SQL 
    - Dans  le cas du SQL (SQLite soucis de rapidité, dans un vrai contexte un vrais SGBD MySQL) :
+      - Nécessité de laisser les tables disjoinctes car les données provenant de MongoDB ont des structures différentes :
+        - Collection Vol et Prix :  1 destination  = 200 vols 
+        - Collection évènement : 1 clé = 1 évènement
+        - Collection Airlines et Airport : 1 code aéroport = 1 nom aéroport
+      
       - Tableau d'information sur le vol et les évènements (schémas fixe)
           - Connexion + création d'une base de données sqlite :``` create_engine('sqlite:///travel.db', echo = True)``` 
            - Créations des tables  (récupération des données utilisées pour le projet):
@@ -163,6 +168,7 @@ AirportCodeAPI :
         - Insertion des données SQL dans SQLite :  ``` INSERT OR REPLACE INTO Events VALUES ({markers}) ```
         - Jointure des données dans la base de donnée SQL obtenir une table résultante contenant les informations sur les vols, la période, la destination et les activités:
                 ```  SELECT ... INNER JOIN ... ON ...  ```
+            
 ## 3. Consommation des données 
 
  - Création d'une application Dash
