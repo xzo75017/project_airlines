@@ -1,5 +1,4 @@
 from sqlalchemy import Table, create_engine, MetaData, String, Column, Float
-from datetime import datetime as dt
 
 
 def DB_SQL_connect():
@@ -57,14 +56,14 @@ def creation_tables():
     
     meta.create_all(DB_SQL_connect())
 
-def insertion_vol(mdb, count_vol, count_price):
+def insertion_vol(mdb):
     '''
     Fonction permettant d'insérer les valeurs de la DB_Mongo dans le SQL.
     '''
     db = mdb
 
-    cursor = db.vol.find().limit(count_vol)
-    cursor2 = db.price.find().limit(count_price)
+    cursor = db.vol.find().skip(db.vol.count_documents(filter ={})-1)
+    cursor2 = db.price.find().skip(db.price.count_documents(filter ={})-1)
     cursor3 = db.airport.find()
     cursor4 = db.airline.find()
     for item in cursor:
@@ -147,23 +146,21 @@ def insertion_vol(mdb, count_vol, count_price):
             else:
                 transaction.commit()
                 
-def insertion_event(mdb):
+def insertion_event(mdb, ville):
     '''
     Fonction permettant d'insérer les valeurs de la DB_Mongo dans le SQL.
     '''
     
-    cursor = mdb.event.find()
+    cursor = mdb.event.find(filter = {'Ville':ville})
     
     titre = []
     jour = []
     mois = []
-    ville = []
     last = []
     for i in cursor:
         titre.append(i.get('Titre'))
         jour.append(i.get('Jour'))
         mois.append(i.get('Mois'))
-        ville.append(i.get('Ville'))
         last.append(i.get('Last_Scrap'))
         
     with DB_SQL_connect().connect() as connection:
@@ -171,15 +168,15 @@ def insertion_event(mdb):
             try:
                 #On drop les valeurs existantes dans le SQL pour cette ville
                 ins = 'DELETE FROM Events WHERE Events.city = (?)'
-                connection.execute(ins, ville[0])
+                connection.execute(ins, ville)
                 
                 #On ajoute ensuite les nouvelles valeurs
-                markers = ','.join('?' * 4)
+                markers = ','.join('?' * 5)
                 ins = 'INSERT OR REPLACE INTO Events VALUES ({markers})'
                 
                 ins = ins.format(markers = markers)
-                for t, j, m, v, l in zip(titre, jour, mois, ville, last):
-                    connection.execute(ins, (t, j, m, v, l))
+                for t, j, m, l in zip(titre, jour, mois, last):
+                    connection.execute(ins, (t, j, m, ville, l))
             except:
                 transaction.rollback()
                 raise
@@ -193,6 +190,7 @@ def table_association(cursor, depart, arrivee, start_date):
     '''
     marker1 = depart + "%"
     marker2 = arrivee + "%"
+
     
     result = cursor.execute("""
         SELECT
@@ -223,3 +221,4 @@ def table_association(cursor, depart, arrivee, start_date):
         """, (marker1, marker2, start_date))
     
     return result.fetchall()
+

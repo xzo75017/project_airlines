@@ -1,14 +1,20 @@
 from dash import Dash, html, callback_context
 from dash.dependencies import Input,Output, State
 from Dash_utils import dash_event, creation_dash_table, date_range, city_to_code, data_handler_vol
-import Dash_components as dc
+import Dash.Dash_components as dc
 import dash_bootstrap_components as dbc
 from datetime import datetime as dt
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 
-app.layout = html.Div([dc.Vol, dc.sidebar])
+app.layout = dbc.Container([
+    dbc.Col(html.Div(dc.sidebar)),
+    dbc.Col([
+        dbc.Row([dc.Tableau]),
+        dbc.Row([dc.Vol]),
+    ]),
+])
 
 @app.callback(
     Output('Tableau', 'children'),
@@ -43,8 +49,6 @@ def date_event(btn_event, start_date, end_date, arrivee, depart, adulte, enfant,
                 print(date)
             result = dash_event(date)
             return creation_dash_table(result)
-    else :
-        return "Selectionnez des dates"
 
 @app.callback(
     Output('Vol', 'children'),
@@ -61,13 +65,17 @@ def recherche_vol(btn_vol, start_date, end_date, arrivee, depart, adulte, enfant
     if start_date is not None and end_date is not None and arrivee is not None and depart is not None and adulte is not None and enfant is not None and bebe is not None:
         print('Ville de départ : ', depart)
         ville_dep =  city_to_code(depart)
+        if ville_dep == 0:
+            return html.H2("La ville de départ n'est pas répertoriée")
         print("Code de ville de départ : ", ville_dep)
         ville_arr = city_to_code(arrivee)
+        if ville_arr == 0:
+            return html.H2("La ville d'arrivée n'est pas répertoriée")
         print("Code de ville d'arrivée : ", ville_arr)
         result = data_handler_vol(depart, arrivee, ville_dep, ville_arr, start_date, adulte, enfant, bebe)
         return creation_dash_table(result)       
     else:
-        return "Complétez les informations"
+        return html.H1("Complétez les informations")
 
 
 if __name__=="__main__":

@@ -3,7 +3,12 @@ from sql_database import DB_SQL_connect, creation_tables
 
 def drop():
     with DB_SQL_connect().connect() as connection:
-       connection.execute('DROP TABLE City')
+        connection.execute('DROP TABLE Vol;')
+        connection.execute('DROP TABLE Price;')
+        connection.execute('DROP TABLE Events;')
+        connection.execute('DROP TABLE Airport;')
+        connection.execute('DROP TABLE Airline;')
+        connection.execute('DROP TABLE City')
        
        
 drop()
