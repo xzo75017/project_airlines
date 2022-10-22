@@ -1,4 +1,3 @@
-from types import NoneType
 from Data.SQL.sql_database import table_association, DB_SQL_connect, insertion_vol, insertion_event
 from dash import dash_table
 import pandas as pd
@@ -35,7 +34,7 @@ def dash_event(date):
         ville = date[0][2]
         result = connection.execute("Select Events.Last_Scrap FROM Events WHERE Events.city = (?)", ville)
         retour = result.fetchone()
-        if type(retour) == NoneType or isMoreThan7Days(retour[0]):
+        if type(retour) == type(None) or isMoreThan7Days(retour[0]):
             print("La ville n'est pas dans la base ou cela fait + de 7j")
             print("Quelle est la ville? : ", ville)
             io = open(Fichier('event', scrap(ville), ville_arr=ville).link, "r")
