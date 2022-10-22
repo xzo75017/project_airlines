@@ -115,7 +115,7 @@ def city_to_code(ville):
         ins = 'Select City.cityCode from City WHERE City.cityName LIKE (?)'
         result = connection.execute(ins, filter)
         retour = result.fetchone()
-        if type(retour)==NoneType:
+        if type(retour)==type(None):
             return 0
         else:
             return retour[0]
