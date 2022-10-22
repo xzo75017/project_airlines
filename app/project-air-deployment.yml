@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-airlines-deployment
+  labels:
+    app: project-air-dep
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: project-air-dep
+  template:
+    metadata:
+      labels:
+        app: project-air-dep
+    spec:
+      containers:
+      - name: project-airlines
+        image: xzo75/project_airlines:latest
+        ports:
+        - containerPort: 5000
