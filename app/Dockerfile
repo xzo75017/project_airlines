@@ -8,4 +8,4 @@ ADD Dash home/ubuntu/project_airlines/app/Dash
 ADD allevents home/ubuntu/project_airlines/app/allevents
 WORKDIR /app/
 EXPOSE 5000
-RUN python3 /home/ubuntu/project_airlines/app/App_dash.py
+CMD python3 /home/ubuntu/project_airlines/app/App_dash.py
