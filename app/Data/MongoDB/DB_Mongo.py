@@ -1,4 +1,3 @@
-from msilib.schema import Error
 from pymongo import MongoClient
 
 class DB_Mongo:
