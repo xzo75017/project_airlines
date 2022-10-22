@@ -59,7 +59,6 @@ def creation_dash_table(data):
     -dash_table
     '''
     df1 = pd.DataFrame(data)
-    print(df1.head())
     return [
        dash_table.DataTable(
             df1.to_dict('records'),

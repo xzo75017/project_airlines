@@ -1,4 +1,4 @@
-from dash import Dash, html, callback_context
+from dash import Dash, html, callback_context, dcc
 from dash.dependencies import Input,Output, State
 from Dash_utils import dash_event, creation_dash_table, date_range, city_to_code, data_handler_vol
 import Dash.Dash_components as dc
@@ -11,13 +11,14 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.layout = dbc.Container([
     dbc.Col(html.Div(dc.sidebar)),
     dbc.Col([
-        dbc.Row([dc.Tableau]),
-        dbc.Row([dc.Vol]),
+        dbc.Row([dc.Event]),
+        dbc.Row([dc.Vol_aller]),
+        dbc.Row([dc.Vol_retour]),
     ]),
 ])
 
 @app.callback(
-    Output('Tableau', 'children'),
+    Output('Event', 'children'),
     Input('submit-val', 'n_clicks'),
     State('my-date-picker-range', 'start_date'),
     State('my-date-picker-range', 'end_date'),
@@ -51,7 +52,7 @@ def date_event(btn_event, start_date, end_date, arrivee, depart, adulte, enfant,
             return creation_dash_table(result)
 
 @app.callback(
-    Output('Vol', 'children'),
+    Output('Vol_aller', 'children'),
     Input('submit-val2', 'n_clicks'),
     State('my-date-picker-range', 'start_date'),
     State('my-date-picker-range', 'end_date'),
@@ -61,7 +62,7 @@ def date_event(btn_event, start_date, end_date, arrivee, depart, adulte, enfant,
     State('passagers1', 'value'),
     State('passagers2', 'value'),
 )
-def recherche_vol(btn_vol, start_date, end_date, arrivee, depart, adulte, enfant, bebe):
+def recherche_vol_aller(btn_vol, start_date, end_date, arrivee, depart, adulte, enfant, bebe):
     if start_date is not None and end_date is not None and arrivee is not None and depart is not None and adulte is not None and enfant is not None and bebe is not None:
         print('Ville de départ : ', depart)
         ville_dep =  city_to_code(depart)
@@ -72,10 +73,60 @@ def recherche_vol(btn_vol, start_date, end_date, arrivee, depart, adulte, enfant
         if ville_arr == 0:
             return html.H2("La ville d'arrivée n'est pas répertoriée")
         print("Code de ville d'arrivée : ", ville_arr)
-        result = data_handler_vol(depart, arrivee, ville_dep, ville_arr, start_date, adulte, enfant, bebe)
-        return creation_dash_table(result)       
+        aller = data_handler_vol(depart, arrivee, ville_dep, ville_arr, start_date, adulte, enfant, bebe)
+        return creation_dash_table(aller)       
     else:
         return html.H1("Complétez les informations")
+    
+@app.callback(
+    Output('Vol_retour', 'children'),
+    Input('submit-val2', 'n_clicks'),
+    State('my-date-picker-range', 'start_date'),
+    State('my-date-picker-range', 'end_date'),
+    State('ville_event', 'value'),
+    State('ville_dep', 'value'),
+    State('passagers0', 'value'),
+    State('passagers1', 'value'),
+    State('passagers2', 'value'),
+)
+def recherche_vol_retour(btn_vol, start_date, end_date, arrivee, depart, adulte, enfant, bebe):
+    if start_date is not None and end_date is not None and arrivee is not None and depart is not None and adulte is not None and enfant is not None and bebe is not None:
+        print('Ville de départ : ', depart)
+        ville_dep =  city_to_code(depart)
+        if ville_dep == 0:
+            return html.H2("La ville de départ n'est pas répertoriée")
+        print("Code de ville de départ : ", ville_dep)
+        ville_arr = city_to_code(arrivee)
+        if ville_arr == 0:
+            return html.H2("La ville d'arrivée n'est pas répertoriée")
+        print("Code de ville d'arrivée : ", ville_arr)
+        retour = data_handler_vol(arrivee, depart, ville_arr, ville_dep, end_date, adulte, enfant, bebe)
+        return creation_dash_table(retour)       
+
+
+@app.callback(
+    Output('titre', 'children'),
+    Input('submit-val', 'n_clicks'),
+)
+def show_title_event(n_clicks):
+    if n_clicks > 0:
+        return html.H3("Evenements")
+
+@app.callback(
+    Output('aller', 'children'),
+    Input('submit-val2', 'n_clicks'),
+)
+def show_title_vol_aller(n_clicks):
+    if n_clicks > 0:
+        return html.H3("Aller")   
+    
+@app.callback(
+    Output('retour', 'children'),
+    Input('submit-val2', 'n_clicks'),
+)
+def show_title_vol_retour(n_clicks):
+    if n_clicks > 0:
+        return html.H3("Retour")
 
 
 if __name__=="__main__":

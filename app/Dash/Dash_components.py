@@ -8,9 +8,11 @@ Columns = ("Départ",        #Champs de textes de la sidebar
 Columns_vol = ("Nombre d'adultes", "Nombre d'enfants", "Nombre de bébés")
 
 
-Tableau = html.Div([dcc.Loading(id = "Tableau", type= "circle")], style =css.TABLE_STYLE)      #Tableau d'association
+Event = html.Div([html.H3(id = 'titre')] +  [dcc.Loading(id = "Event")], style =css.TABLE_STYLE)      #Tableau d'evenements)
 
-Vol = html.Div([dcc.Loading(id = "Vol", type= "circle")], style =css.TABLE_STYLE)      #Tableau d'association
+Vol_aller = html.Div([html.H3(id = 'aller')] +  [dcc.Loading(id = "Vol_aller")], style =css.TABLE_STYLE)      #Tableau de vols_aller
+
+Vol_retour = html.Div([html.H3(id = 'retour')] +  [dcc.Loading(id = "Vol_retour")], style =css.TABLE_STYLE)
 
 date = html.Div([                                         #Date de la sidebar
     dcc.DatePickerRange(
@@ -57,7 +59,7 @@ table = html.Div(                                         #Contenue de la sideba
     +
     [html.Br(),
      html.Br(),
-     html.Button('Trouver des Vols', id='submit-val2', n_clicks=0)]
+     html.Button('Trouver des vols', id='submit-val2', n_clicks=0)]
 )
 
 
