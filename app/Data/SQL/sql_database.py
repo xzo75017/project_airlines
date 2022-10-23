@@ -2,7 +2,7 @@ from sqlalchemy import Table, create_engine, MetaData, String, Column, Float
 
 
 def DB_SQL_connect():
-    return create_engine('sqlite:////Data/SQL/database/travel.db', echo = True)
+    return create_engine('sqlite:///Data/SQL/database/travel.db', echo = True)
      
 
 def creation_tables():
