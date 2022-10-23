@@ -27,19 +27,18 @@ class DB_Mongo:
 
     
     def insert(self, fichier, option):
-        match option:
-            case 'Vol':
-                self.vol.insert_one(fichier)
-            case 'Event':
-                self.event.insert_one(fichier)
-            case 'Price':
-                self.price.insert_one(fichier)
-            case 'Airport':
-                self.airport.replace_one(fichier, fichier, upsert=True)
-            case 'Airline':
-                self.airline.replace_one(fichier, fichier, upsert=True)
-            case other:
-                raise ValueError("L'option n'est pas dans la liste")
+        if option == 'Vol':
+            self.vol.insert_one(fichier)
+        elif option == 'Event':
+            self.event.insert_one(fichier)
+        elif option == 'Price':
+            self.price.insert_one(fichier)
+        elif option == 'Airport':
+            self.airport.replace_one(fichier, fichier, upsert=True)
+        elif option == 'Airline':
+            self.airline.replace_one(fichier, fichier, upsert=True)
+        else:
+            raise ValueError("L'option n'est pas dans la liste")
     
      
        
