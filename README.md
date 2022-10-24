@@ -183,6 +183,37 @@ AirportCodeAPI :
             
 ## 3. Consommation des données 
 
- - Création d'une application Dash
+ ### 3.1 Création d'une application Dash
     - Affichage de la table jointe sur DASH
-    - Utilisateur entre une ville de destination sur Le Dash, le Dash récupère les données des activités dans le SQL et l'affiche. L'utilisateur sélectionne une activité puis le Dash va récupérer les données de vol pour cette ville puis affiche les données de Vol dans Dash.
+   
+    - Représentation du Dash lors de son lancement : 
+    ![unknown](https://user-images.githubusercontent.com/63191063/197458195-98739f2d-8253-42bb-8621-a7dd912edd1e.png)
+    #### 3.1.1 Lancement d'un évènement sous Dash
+    
+     -  L'utilisateur sélectionne la ville d'arrivée + dates pour les évènements puis le Dash va récupérer les données de vol pour cette ville puis affiche les données de Vol dans Dash:
+     
+     ![unknown](https://user-images.githubusercontent.com/63191063/197458468-8e0f74cb-b3f8-4db0-bef5-b5b8b7bd2c87.png)
+
+     - Lancement du programme "Trouver des evenements"
+       - Récupération de la ville et des dates dans le SQL
+         - ```If``` ville présente dans la table SQL ou que ça fait moins de 7j (choix du nombre de jour arbitraire) :
+            - Récupération des informations des dates + affichage (temps de réponse : rapide)
+         - ```Else ```:
+            - Webscraping de la page allevents + création JSON + insertion MongoDB + remplacement des information de la ville dans SQL si SQL existe (temps de réponse : lente ~ 1-8mn cas à Londres)
+                - Informations obsolètes dans le SQL effacées
+                - Conservation des informations obsolètes dans le MongoDB + JSON
+                
+      - Résultat sous cette forme (format du SQL compacte pour la rapidité):
+     
+     
+     ![unknown](https://user-images.githubusercontent.com/63191063/197460905-6c81edb4-3bcc-4e86-b41d-97501a211a2d.png)
+     
+    #### Lancement d'un vol sous Dash
+    
+     - 
+       
+       - 
+      
+      
+      
+         
