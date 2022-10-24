@@ -73,7 +73,7 @@ AirportCodeAPI :
 
 - Besoin d'information sur les vols, les prix, les aéroports, les compagnie aérienne
    - Stocker les informations sur MongoDB sous forme de collections:
-       - Formats différents pour les données bruts provenant de Airport et Airline (éviter les doublons)
+       - Formats différents pour les données bruts notamment Airport et Airline (éviter les doublons)
         - Historiser les données dans MongoDB 
         - Capacité de stockage importante sur MongoDB 
     - Avant cette étape :
