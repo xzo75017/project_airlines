@@ -267,7 +267,7 @@ AirportCodeAPI :
   - Fichier yaml du contrôleur
     - project-air-ingress.yml
  
-  -Fichier yaml pour le réseau dans kubernetes
+  - Fichier yaml pour le réseau dans kubernetes
     - project-air-service.yml
 
 ### 5. Conclusion 
