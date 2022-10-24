@@ -231,15 +231,21 @@ AirportCodeAPI :
    ![unknown](https://user-images.githubusercontent.com/63191063/197514031-a666091d-eede-48ee-b7e5-426442709a57.png)
 
       
-     - programme exécute toute la chaine automatiquement :requete, création des json, insértion dans la base MongoDB, insertion dans SQL
+    - Exécution de toute la chaine :requete, création des json, insértion dans la base MongoDB, insertion dans SQL
       
-      -Résultat sous cette forme : 
+      - Résultat sous cette forme : 
+      
+      
       
       
       ![unknown](https://user-images.githubusercontent.com/63191063/197514421-563ae25d-62ae-466f-8e3e-89c6112d6800.png)
 
+
+
+
       
-      - Stockage des données dans Data/json/requetes/Ville_de_Départ-Ville_d'arrivée/Jour_de_la_requete.json
+    - Stockage des données dans Data/json/requetes/Ville_de_Départ-Ville_d'arrivée/Jour_de_la_requete.json
+      
       
       
       ![unknown](https://user-images.githubusercontent.com/63191063/197514568-0dc8db62-1178-4f8a-8b0c-82089ea1481f.png)
@@ -255,14 +261,14 @@ AirportCodeAPI :
 -Utilisation de Kubernetes pour déployer l'application 
 
 - Construction des fichiers yaml : 
-- Fichier de déploiement 
- - project-air-deployment.yml
+  - Fichier de déploiement 
+    - project-air-deployment.yml
 
-- Fichier yaml du contrôleur
- - project-air-ingress.yml
+  - Fichier yaml du contrôleur
+    - project-air-ingress.yml
  
--Fichier yaml pour le réseau dans kubernetes
- - project-air-service.yml
+  -Fichier yaml pour le réseau dans kubernetes
+    - project-air-service.yml
 
 ### 5. Conclusion 
 
