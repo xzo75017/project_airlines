@@ -231,7 +231,7 @@ AirportCodeAPI :
    ![unknown](https://user-images.githubusercontent.com/63191063/197514031-a666091d-eede-48ee-b7e5-426442709a57.png)
 
       
-      - programme exécute toute la chaine automatiquement :requete, création des json, insértion dans la base MongoDB, insertion dans SQL
+     - programme exécute toute la chaine automatiquement :requete, création des json, insértion dans la base MongoDB, insertion dans SQL
       
       -Résultat sous cette forme : 
       
@@ -255,7 +255,19 @@ AirportCodeAPI :
 -Utilisation de Kubernetes pour déployer l'application 
 
 - Construction des fichiers yaml : 
+- Fichier de déploiement 
+ - project-air-deployment.yml
 
+- Fichier yaml du contrôleur
+ - project-air-ingress.yml
+ 
+-Fichier yaml pour le réseau dans kubernetes
+ - project-air-service.yml
 
+### 5. Conclusion 
+
+- Résolution de la problématique. 
+-  Optimisation du projet en rajoutant une route pour les recommandation d'hôtel dans l'extraction de donnée 
+-  Optimisation du projet en mettant les vols les plus populaire comme information
 
 
