@@ -231,7 +231,7 @@ AirportCodeAPI :
    ![unknown](https://user-images.githubusercontent.com/63191063/197514031-a666091d-eede-48ee-b7e5-426442709a57.png)
 
       
-    - Exécution de toute la chaine :requete, création des json, insértion dans la base MongoDB, insertion dans SQL
+ - Exécution de toute la chaine :requete, création des json, insértion dans la base MongoDB, insertion dans SQL
       
       - Résultat sous cette forme : 
       
@@ -244,7 +244,7 @@ AirportCodeAPI :
 
 
       
-    - Stockage des données dans Data/json/requetes/Ville_de_Départ-Ville_d'arrivée/Jour_de_la_requete.json
+ - Stockage des données dans Data/json/requetes/Ville_de_Départ-Ville_d'arrivée/Jour_de_la_requete.json
       
       
       
