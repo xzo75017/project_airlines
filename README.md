@@ -93,7 +93,7 @@ AirportCodeAPI :
         - Besoin de relier les futures collections entre elles:
             - Uniformisation de l'ID:
 
-             ex  id de legs : ```LHR-LAX:BA5951~11:BA6123~11:0" ``` et de price ex : ```a6fca0f2a8a3e4f3msr:BA5951~11-BA6123~11``` en ```BA5951~11-BA6123~11 ```
+             ex  id de vol : ```LHR-LAX:BA5951~11:BA6123~11:0" ``` et de price ex : ```a6fca0f2a8a3e4f3msr:BA5951~11-BA6123~11``` en ```BA5951~11-BA6123~11 ```
             -  Selection des variables 
              Sélections de 9 variables sur les 30 présentes dans la collection ```Vol``` :
 
@@ -150,7 +150,13 @@ AirportCodeAPI :
 
                  ```evenement ``` 
                  
+              - Visualisation du cluster : 
+              
+              
+                 
  ### 2.2 Traitement des données en utilisant une base de donnée SQL 
+   -  Tableau d'information sur le vol et les évènements : nécessité schéma fixe
+   
    - Dans  le cas du SQL (SQLite soucis de rapidité, dans un vrai contexte un vrais SGBD MySQL) :
       - Nécessité de laisser les tables disjoinctes car les données provenant de MongoDB ont des structures différentes :
         - Collection Vol et Prix :  1 destination  = 200 vols 
@@ -164,7 +170,7 @@ AirportCodeAPI :
       
       
       
-      - Tableau d'information sur le vol et les évènements (schémas fixe)
+      
           - Connexion + création d'une base de données sqlite :``` create_engine('sqlite:///travel.db', echo = True)``` 
            - Créations des tables  (récupération des données utilisées pour le projet):
 
@@ -178,13 +184,16 @@ AirportCodeAPI :
 
              ```evenement ``` 
         - Insertion des données SQL dans SQLite :  ``` INSERT OR REPLACE INTO Events VALUES ({markers}) ```
-        - Jointure des données dans la base de donnée SQL pour obtenir une table résultante contenant les informations sur les vols, les prix, la destination et les activités:
+        - Affichage de la Jointure des table dans la base de donnée SQL pour obtenir une table résultante contenant les informations sur les vols, les prix, la destination et les activités:
                 ```  SELECT ... INNER JOIN ... ON ...  ```
             
 ## 3. Consommation des données 
 
- ### 3.1 Création d'une application Dash
-    - Affichage de la table jointe sur DASH
+ 
+
+
+### 3.1 Création d'une application Dash
+  - Affichage de la table jointe sur DASH
    
     - Représentation du Dash lors de son lancement : 
     ![unknown](https://user-images.githubusercontent.com/63191063/197458195-98739f2d-8253-42bb-8621-a7dd912edd1e.png)
@@ -209,11 +218,44 @@ AirportCodeAPI :
      ![unknown](https://user-images.githubusercontent.com/63191063/197460905-6c81edb4-3bcc-4e86-b41d-97501a211a2d.png)
      
     #### Lancement d'un vol sous Dash
-    
-     - 
+
+     - Compléter les informations pour trouver un vol aller-retour
+       - compléter la ville de départ, le nombre d'adulte, d'enfants et de bébés
+
+       - ![unknown](https://user-images.githubusercontent.com/63191063/197513817-c9d6a1b9-9a05-45ef-941e-59b42437fc49.png)
        
-       - 
+       
+       - Chargement de la requête :
+       
+       
+   ![unknown](https://user-images.githubusercontent.com/63191063/197514031-a666091d-eede-48ee-b7e5-426442709a57.png)
+
+      
+      - programme exécute toute la chaine automatiquement :requete, création des json, insértion dans la base MongoDB, insertion dans SQL
+      
+      -Résultat sous cette forme : 
       
       
+      ![unknown](https://user-images.githubusercontent.com/63191063/197514421-563ae25d-62ae-466f-8e3e-89c6112d6800.png)
+
       
-         
+      - Stockage des données dans Data/json/requetes/Ville_de_Départ-Ville_d'arrivée/Jour_de_la_requete.json
+      
+      
+      ![unknown](https://user-images.githubusercontent.com/63191063/197514568-0dc8db62-1178-4f8a-8b0c-82089ea1481f.png)
+
+
+### 4. Containerisation et deploiement 
+
+- Structure du code intégré dans une image Dockerfile pour le déploiement
+- Construction de l'image 
+
+``` docker image build -t xzo75/project_airlines:latest```
+
+-Utilisation de Kubernetes pour déployer l'application 
+
+- Construction des fichiers yaml : 
+
+
+
+
