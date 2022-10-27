@@ -279,8 +279,33 @@ AirportCodeAPI :
 
 ### 5. Conclusion 
 
-- Résolution de la problématique. 
--  Optimisation du projet en rajoutant une route pour les recommandation d'hôtel dans l'extraction de donnée 
--  Optimisation du projet en mettant les vols les plus populaire comme information
+- Spécification de base : 
+
+ - Mise à jour automatique de l’application 
+
+ - Permettre de requêter une API et webscraper une page web 
+
+ - Stocker les informations brutes  
+
+ - Stocker les informations transformées 
+
+ - Déployer l’application vers n’importe quel environnement  
+  
+- Résultat :
+
+![Capturennn](https://user-images.githubusercontent.com/63191063/198234332-01c36329-0f23-48f4-9290-4ba6abaa8919.PNG)
+
+
+Perspective : 
+
+- En formation continu :
+  - test unitaire 
+  - Pipeline CI/CD
+  - Améliorer l’UI de l’application
+  - Ajout les hotels et leurs prix
+  - Ajout des destinations les plus populaires
+  - Nettoyage régulier du SQL pour réduire la taille au minimum et améliorer les temps de réponses
+  - Amélioration du temps de webscraping des événements
+  - Ajouter des liens pour les sites proposants les prix affichés/Permettre de réserver directement depuis l’application
 
 
