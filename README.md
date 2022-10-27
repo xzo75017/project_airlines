@@ -258,7 +258,9 @@ AirportCodeAPI :
 
 ``` docker image build -t xzo75/project_airlines:latest```
 
--Utilisation de Kubernetes pour déployer l'application 
+- Utilisation de Kubernetes pour déployer l'application
+
+
 
 - Construction des fichiers yaml : 
   - Fichier de déploiement 
