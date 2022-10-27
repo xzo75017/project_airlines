@@ -280,20 +280,16 @@ AirportCodeAPI :
 ### 5. Conclusion 
 
 - Spécification de base : 
-
- - Mise à jour automatique de l’application 
-
- - Permettre de requêter une API et webscraper une page web 
-
- - Stocker les informations brutes  
-
- - Stocker les informations transformées 
-
- - Déployer l’application vers n’importe quel environnement  
+  - Mise à jour automatique de l’application 
+  - Permettre de requêter une API et webscraper une page web 
+  - Stocker les informations brutes  
+  - Stocker les informations transformées 
+  - Déployer l’application vers n’importe quel environnement  
   
 - Résultat :
 
-![Capturennn](https://user-images.githubusercontent.com/63191063/198234332-01c36329-0f23-48f4-9290-4ba6abaa8919.PNG)
+![Capturennnn](https://user-images.githubusercontent.com/63191063/198236164-695125d9-9977-4f89-b4d4-75dd6546929b.PNG)
+
 
 
 Perspective : 
