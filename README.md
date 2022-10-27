@@ -260,8 +260,6 @@ AirportCodeAPI :
 
 - Utilisation de Kubernetes pour déployer l'application
 
-
-
 - Construction des fichiers yaml : 
   - Fichier de déploiement 
     - project-air-deployment.yml
@@ -271,6 +269,12 @@ AirportCodeAPI :
  
   - Fichier yaml pour le réseau dans kubernetes
     - project-air-service.yml
+    
+    
+    ![unknown](https://user-images.githubusercontent.com/63191063/198229041-fddb4c43-013b-4c79-9634-e38292be4c2a.png)
+
+    
+    
 
 ### 5. Conclusion 
 
