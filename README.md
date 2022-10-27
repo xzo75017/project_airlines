@@ -149,10 +149,7 @@ AirportCodeAPI :
 
                  ```evenement ``` 
                  
-              - Visualisation du cluster : 
-              
-              
-                 
+                  
  ### 2.2 Traitement des données en utilisant une base de donnée SQL 
    -  Tableau d'information sur le vol et les évènements : nécessité schéma fixe
    
