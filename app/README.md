@@ -9,7 +9,7 @@
  
  - Programme à exécuter : App_dash.py
  
- - Commande à lancer pour l'application : 
+ - Commande à effectuer pour l'application : 
 
     ``` python3 App_dash.py```
     
@@ -18,7 +18,7 @@
 
  ## Lancement de l'application à partir du Docker 
  
- - Commande à lancer pour l'application :
+ - Commande à effectuer pour l'application :
 
    ``` docker container run -it -p5000:5000 xzo75/project_airlines:latest ```
     
