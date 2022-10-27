@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name:  my-service-eval
+  name: project-airlines-service
 spec:
   selector: 
-    app: my-eval-dep 
+    app: project-air-dep 
   ports:
   - protocol: TCP
-    port: 8002
-    targetPort: 8000
+    port: 8001
+    targetPort: 5000

@@ -5,6 +5,6 @@ metadata:
 spec:
   defaultBackend:
     service:
-      name: my-service-eval
+      name: project-airlines-service
       port:
         number: 8001
