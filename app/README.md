@@ -1,4 +1,4 @@
-#Lancement de l'application
+# Lancement de l'application
 
 
  ## Lancement de l'application du terminal en local 
