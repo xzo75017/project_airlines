@@ -29,8 +29,7 @@ Le projet va s'articuler de la manière suivante comme l'indique le diagramme ci
 ```
 - Utilisation de la classe ```BeautifulSoup()``` de la librairie ```bs4``` pour webscraper la page Allevents  en langage Python (version ```Python 3.10.7```)
 
-- Récupération des cityCode de chaque ville sur le site ``` https://www.nationsonline.org/oneworld/IATA_Codes/airport_code_list.htm``` pour effectuer les requêtes sur FlightAPI
-- 
+- Récupération des cityCode de chaque ville sur le site ``` https://www.nationsonline.org/oneworld/IATA_Codes/airport_code_list.htm``` pour effectuer les requêtes sur FlightAPI 
     - Technique de webscraping non réalisable car le site est protégé contre les bots
          - Isertion des données dans un fichier txt
          
