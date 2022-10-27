@@ -1,4 +1,3 @@
-from datetime import datetime as dt
 
 
 def billet_id_split(code):
@@ -107,5 +106,5 @@ def insertion_mdb_event(data, db):
     '''
     
     for nom_it, jour_it, mois_it in zip(data['Titre'], data['Jour'], data['Mois']):
-        dict = {'Titre':nom_it, 'Jour':jour_it, 'Mois':mois_it, 'Ville':data['Ville'][0], 'Last_Scrap':str(dt.now())}
+        dict = {'Titre':nom_it, 'Jour':jour_it, 'Mois':mois_it, 'Ville':data['Ville'][0]}
         db.insert(dict, 'Event')

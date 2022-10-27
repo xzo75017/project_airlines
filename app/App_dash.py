@@ -1,9 +1,12 @@
 from dash import Dash, html, callback_context
+from sql_database import creation_tables
 from dash.dependencies import Input,Output, State
 from Dash_utils import dash_event, creation_dash_table, date_range, city_to_code, data_handler_vol
 import Dash.Dash_components as dc
 import dash_bootstrap_components as dbc
 from datetime import datetime as dt
+
+creation_tables()
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -47,7 +50,7 @@ def date_event(btn_event, start_date, end_date, arrivee, depart, adulte, enfant,
                 format = element.strftime('%b %d')
                 split = format.split()
                 date.append((split[0],split[1], arrivee))
-                print(date)
+                #print(date)
             result = dash_event(date)
             return creation_dash_table(result)
 
@@ -64,15 +67,15 @@ def date_event(btn_event, start_date, end_date, arrivee, depart, adulte, enfant,
 )
 def recherche_vol_aller(btn_vol, start_date, end_date, arrivee, depart, adulte, enfant, bebe):
     if start_date is not None and end_date is not None and arrivee is not None and depart is not None and adulte is not None and enfant is not None and bebe is not None:
-        print('Ville de départ : ', depart)
+        #print('Ville de départ : ', depart)
         ville_dep =  city_to_code(depart)
         if ville_dep == 0:
             return html.H2("La ville de départ n'est pas répertoriée")
-        print("Code de ville de départ : ", ville_dep)
+        #print("Code de ville de départ : ", ville_dep)
         ville_arr = city_to_code(arrivee)
         if ville_arr == 0:
             return html.H2("La ville d'arrivée n'est pas répertoriée")
-        print("Code de ville d'arrivée : ", ville_arr)
+        #print("Code de ville d'arrivée : ", ville_arr)
         aller = data_handler_vol(depart, arrivee, ville_dep, ville_arr, start_date, adulte, enfant, bebe)
         return creation_dash_table(aller)       
     else:
@@ -91,15 +94,15 @@ def recherche_vol_aller(btn_vol, start_date, end_date, arrivee, depart, adulte, 
 )
 def recherche_vol_retour(btn_vol, start_date, end_date, arrivee, depart, adulte, enfant, bebe):
     if start_date is not None and end_date is not None and arrivee is not None and depart is not None and adulte is not None and enfant is not None and bebe is not None:
-        print('Ville de départ : ', depart)
+        #print('Ville de départ : ', depart)
         ville_dep =  city_to_code(depart)
         if ville_dep == 0:
             return html.H2("La ville de départ n'est pas répertoriée")
-        print("Code de ville de départ : ", ville_dep)
+        #print("Code de ville de départ : ", ville_dep)
         ville_arr = city_to_code(arrivee)
         if ville_arr == 0:
             return html.H2("La ville d'arrivée n'est pas répertoriée")
-        print("Code de ville d'arrivée : ", ville_arr)
+        #print("Code de ville d'arrivée : ", ville_arr)
         retour = data_handler_vol(arrivee, depart, ville_arr, ville_dep, end_date, adulte, enfant, bebe)
         return creation_dash_table(retour)       
 

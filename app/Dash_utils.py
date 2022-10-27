@@ -1,4 +1,4 @@
-from Data.SQL.sql_database import table_association, DB_SQL_connect, insertion_vol, insertion_event
+from sql_database import table_association, DB_SQL_connect, insertion_vol, insertion_event
 from dash import dash_table
 import pandas as pd
 from datetime import timedelta as td, datetime as dt
@@ -17,7 +17,7 @@ def isMoreThan7Days(date_scrap):
     Sortie:
     -booléen
     '''
-    print(type(date_scrap))
+    # print("dernier scrap : " + date_scrap)
     date_object = dt.fromisoformat(date_scrap)
     if dt.now() < date_object + td(days=7):  #Si la date d'aujourd'hui est inférieur au last scrap + 7 jours
         return False
@@ -28,23 +28,23 @@ def dash_event(date):
     '''
     Fonction permettant au dash de récupérer des évenements contenues entre 2 dates
     '''
-    print("Entrée dans la fonction dash_event")
+    # print("Entrée dans la fonction dash_event")
     with DB_SQL_connect().connect() as connection:
-        print("connexion ouverte")
+        # print("connexion ouverte")
         ville = date[0][2]
         result = connection.execute("Select Events.Last_Scrap FROM Events WHERE Events.city = (?)", ville)
         retour = result.fetchone()
         if type(retour) == type(None) or isMoreThan7Days(retour[0]):
-            print("La ville n'est pas dans la base ou cela fait + de 7j")
-            print("Quelle est la ville? : ", ville)
+            # print("La ville n'est pas dans la base ou cela fait + de 7j")
+            # print("Quelle est la ville? : ", ville)
             io = open(Fichier('event', scrap(ville), ville_arr=ville).link, "r")
             data = json.load(io)
-            print("Le fichier json vient d'être créé")
+            # print("Le fichier json vient d'être créé")
             db = DB_Mongo()  
             insertion_mdb_event(data, db)
-            print("Les données sont bien insérés dans le MongoDB")
+            # print("Les données sont bien insérés dans le MongoDB")
             insertion_event(db, ville)
-            print("Les données sont bien insérés dans le SQL")    
+            # print("Les données sont bien insérés dans le SQL")    
         return table_event(connection, date)
     
     
@@ -135,20 +135,20 @@ def data_handler_vol(depart, arrivee, code_dep, code_arr, start_date, adulte, en
     Sortie :
     -Résultat de la recherche SQL contenant les données recherchées
     '''
-    print("La fonction est rentrée dans data_handler")
+    # print("La fonction est rentrée dans data_handler")
     filter = code_dep + '/' + code_arr + '/' + start_date + '/' + str(adulte) + '/' + str(enfant) + '/' + str(bebe) + '/' + 'Economy' + '/' + 'EUR'
     operation = 'onewaytrip'
     reponse = requete_api_flightapi(operation, filter)
-    print("La requete a bien été faite")
+    # print("La requete a bien été faite")
     lien = Fichier(operation, reponse, ville_dep=depart, ville_arr=arrivee).link
     io = open(Fichier(operation, reponse, ville_dep=depart, ville_arr=arrivee).link, "r")
     data = json.load(io)
-    print("Le fichier json vient d'être créé avec le lien : ", lien)
+    # print("Le fichier json vient d'être créé avec le lien : ", lien)
     db = DB_Mongo()  
     insertion_mdb_vol(data, db)
-    print("Les données sont bien insérés dans le MongoDB")
+    # print("Les données sont bien insérés dans le MongoDB")
     insertion_vol(db)
-    print("Les données sont bien insérés dans le SQL")
+    # print("Les données sont bien insérés dans le SQL")
     with DB_SQL_connect().connect() as connection:
         return table_association(connection, depart, arrivee, start_date)
     

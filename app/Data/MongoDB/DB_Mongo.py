@@ -30,7 +30,7 @@ class DB_Mongo:
         if option == 'Vol':
             self.vol.insert_one(fichier)
         elif option == 'Event':
-            self.event.insert_one(fichier)
+            self.event.replace_one(fichier, fichier, upsert=True)
         elif option == 'Price':
             self.price.insert_one(fichier)
         elif option == 'Airport':

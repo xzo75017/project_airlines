@@ -1,14 +1,26 @@
 from sqlalchemy import Table, create_engine, MetaData, String, Column, Float
+from datetime import datetime as dt
 
 
 def DB_SQL_connect():
-    return create_engine('sqlite:///Data/SQL/database/travel.db', echo = True)
+    return create_engine('sqlite:///travel.db', echo = False)
      
-
+def drop():
+    with DB_SQL_connect().connect() as connection:
+        connection.execute('DROP TABLE IF EXISTS Vol;')
+        connection.execute('DROP TABLE IF EXISTS Price;')
+        connection.execute('DROP TABLE IF EXISTS Events;')
+        connection.execute('DROP TABLE IF EXISTS Airport;')
+        connection.execute('DROP TABLE IF EXISTS Airline;')
+        connection.execute('DROP TABLE IF EXISTS City')
+        
+        
 def creation_tables():
     '''
     Fonction permettant la création des tables dans le SQL
     '''
+    
+    drop()
     
     meta = MetaData()
     vol = Table("Vol", meta, 
@@ -55,6 +67,31 @@ def creation_tables():
             extend_existing = True)
     
     meta.create_all(DB_SQL_connect())
+    
+    #Insertion dans City si il n'est pas déja présent
+    io = open("cities.txt", "r")
+    lines = io.readlines()
+    split = []
+    for element in lines:
+        split.append(str.split(element, "\t"))
+        
+    with DB_SQL_connect().connect() as connection:
+            with connection.begin() as transaction:
+                try:
+                    ##### TABLE CITY #####
+                    markers = ','.join('?' * 2)
+                    ins = 'INSERT OR REPLACE INTO City VALUES ({markers})'
+                    
+                    ins = ins.format(markers = markers)
+                    
+                    for i in range (len(split)-1):
+                        if(len(split[i])==3):
+                            connection.execute(ins, (split[i][2].strip(),split[i][0]))
+                except:
+                    transaction.rollback()
+                    raise
+                else:
+                    transaction.commit()
 
 def insertion_vol(mdb):
     '''
@@ -92,7 +129,7 @@ def insertion_vol(mdb):
     for i in cursor3:
         codeNameAirport.append(list(i.keys())[1])
         airportName.append(list(i.values())[1])
-    print(codeNameAirport)
+    #print(codeNameAirport)
         
     codeNameAirline = []
     airlineName = []    
@@ -156,12 +193,11 @@ def insertion_event(mdb, ville):
     titre = []
     jour = []
     mois = []
-    last = []
+    last = str(dt.now())
     for i in cursor:
         titre.append(i.get('Titre'))
         jour.append(i.get('Jour'))
         mois.append(i.get('Mois'))
-        last.append(i.get('Last_Scrap'))
         
     with DB_SQL_connect().connect() as connection:
         with connection.begin() as transaction:
@@ -175,8 +211,11 @@ def insertion_event(mdb, ville):
                 ins = 'INSERT OR REPLACE INTO Events VALUES ({markers})'
                 
                 ins = ins.format(markers = markers)
-                for t, j, m, l in zip(titre, jour, mois, last):
-                    connection.execute(ins, (t, j, m, ville, l))
+                for t, j, m in zip(titre, jour, mois):
+                    connection.execute(ins, (t, j, m, ville, last))
+                    
+                    
+                
             except:
                 transaction.rollback()
                 raise
@@ -221,4 +260,3 @@ def table_association(cursor, depart, arrivee, start_date):
         """, (marker1, marker2, start_date))
     
     return result.fetchall()
-
